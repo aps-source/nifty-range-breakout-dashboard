@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>NIFTY Range Breakout — Paper</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root {
+    color-scheme: light;
+    --page: #eceff8; --surface-1: #ffffff; --surface-2: #f3f5fb;
+    --text-primary: #0e1320; --text-secondary: #4f5a74; --text-muted: #76829c;
+    --gridline: #e2e7f1; --border: rgba(14,19,32,0.10);
+    --shadow: 0 1px 2px rgba(14,19,32,0.06), 0 8px 24px rgba(40,50,110,0.08);
+    --brand-a: #4338ca; --brand-b: #7c3aed; --brand-c: #0d9488; --accent: #4f46e5;
+    --nifty: #6d4bd8; --long: #2563eb; --short: #d6336c;
+    --good: #12a150; --warning: #c77d00; --critical: #dc3545; --slate-1: #1b2340; --slate-2: #2d3a66;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --page: #090c14; --surface-1: #131a29; --surface-2: #1a2336;
+      --text-primary: #eef1f9; --text-secondary: #a0abc4; --text-muted: #7f8aa3;
+      --gridline: #253048; --border: rgba(238,241,249,0.11);
+      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 10px 28px rgba(0,0,0,0.35);
+      --brand-a: #4f46e5; --brand-b: #8b5cf6; --brand-c: #14b8a6; --accent: #9b8cf3;
+      --nifty: #8a75ec; --long: #4a8cf0; --short: #e0578a;
+      --good: #2bc85a; --warning: #f2b636; --critical: #f0645f; --slate-1: #0f1630; --slate-2: #26305a;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { font-size: clamp(15px, 0.55vw + 9px, 19px); }
+  body {
+    margin: 0; color: var(--text-primary); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.4;
+    background:
+      radial-gradient(1100px 480px at 8% -8%, color-mix(in srgb, var(--brand-b) 16%, transparent), transparent 70%),
+      radial-gradient(900px 480px at 100% 0%, color-mix(in srgb, var(--brand-c) 14%, transparent), transparent 70%),
+      var(--page);
+    background-attachment: fixed;
+  }
+  .muted { color: var(--text-muted); }
+  b { font-variant-numeric: tabular-nums; }
+
+  .hero { background: linear-gradient(115deg, var(--brand-a) 0%, var(--brand-b) 52%, var(--brand-c) 100%); color: #fff; padding: 1.05rem clamp(14px, 2vw, 32px) 0.9rem; box-shadow: 0 6px 26px rgba(67,56,202,0.28); }
+  .hero-inner { max-width: 1800px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 0.9rem; }
+  .logo { width: 2.5rem; height: 2.5rem; border-radius: 0.8rem; background: rgba(255,255,255,0.18); display: grid; place-items: center; font-size: 1.35rem; }
+  h1 { font-size: 1.45rem; margin: 0; font-weight: 800; letter-spacing: -0.015em; }
+  .tag { font-size: 0.86rem; opacity: 0.88; margin-top: 1px; }
+  .hero-pill { background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.28); padding: 0.32rem 0.75rem; border-radius: 999px; font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+  .paper-pill { background: #fff; color: var(--brand-a); font-weight: 800; padding: 0.32rem 0.8rem; border-radius: 999px; font-size: 0.8rem; letter-spacing: 0.05em; }
+  details.rules { max-width: 1800px; margin: 0.55rem auto 0; font-size: 0.83rem; opacity: 0.95; }
+  details.rules summary { cursor: pointer; font-weight: 600; width: fit-content; }
+  details.rules p { margin: 0.4rem 0 0; max-width: 1100px; opacity: 0.92; }
+
+  .page { max-width: 1800px; margin: 0 auto; padding: 1.1rem clamp(14px, 2vw, 32px) 2rem; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(165px, 100%), 1fr)); gap: 0.9rem; margin-bottom: 1rem; }
+  .kpi { position: relative; overflow: hidden; background: var(--surface-1); border: 1px solid var(--border); border-radius: 1rem; padding: 0.95rem 1.1rem; box-shadow: var(--shadow); min-width: 0; }
+  .kpi::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--kc, var(--accent)); }
+  .kpi .k { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); font-weight: 700; }
+  .kpi .v { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; margin-top: 0.1rem; line-height: 1.15; }
+  .kpi .s { font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.15rem; }
+  .kpi.hero-kpi { background: linear-gradient(135deg, color-mix(in srgb, var(--kc) 20%, var(--surface-1)), var(--surface-1) 70%); }
+  .kpi.good { --kc: var(--good); } .kpi.bad { --kc: var(--critical); } .kpi.warn { --kc: var(--warning); }
+  .kpi.violet { --kc: var(--nifty); } .kpi.blue { --kc: var(--long); } .kpi.pink { --kc: var(--short); } .kpi.teal { --kc: var(--brand-c); }
+  .v.good { color: var(--good); } .v.bad { color: var(--critical); } .v.warn { color: var(--warning); }
+
+  .st-pill { display: inline-flex; align-items: center; gap: 0.35rem; font-weight: 700; font-size: 0.78rem; padding: 0.15rem 0.55rem; border-radius: 999px; }
+  .st-pill.live { background: color-mix(in srgb, var(--good) 16%, var(--surface-1)); color: var(--good); }
+  .st-pill.stale { background: color-mix(in srgb, var(--critical) 16%, var(--surface-1)); color: var(--critical); }
+  .dot { display: inline-block; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: currentColor; flex: none; }
+  .st-pill.live .dot { animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 55%, transparent); } 60% { box-shadow: 0 0 0 6px transparent; } }
+
+  .decision { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.3rem; border-radius: 1.1rem; color: #fff; box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.14); margin-bottom: 1rem; }
+  .decision .glyph { width: 3.1rem; height: 3.1rem; border-radius: 50%; background: rgba(255,255,255,0.2); display: grid; place-items: center; font-size: 1.5rem; font-weight: 800; flex: none; }
+  .decision .mi-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; opacity: 0.9; font-weight: 700; }
+  .decision .mi-action { font-size: 1.6rem; font-weight: 800; line-height: 1.15; }
+  .decision .mi-meta { font-size: 0.85rem; opacity: 0.92; margin-top: 0.15rem; }
+  .decision.LONG { background: linear-gradient(120deg, color-mix(in srgb, var(--long) 72%, #000), var(--long)); }
+  .decision.SHORT { background: linear-gradient(120deg, color-mix(in srgb, var(--short) 72%, #000), var(--short)); }
+  .decision.WAIT { background: linear-gradient(120deg, var(--slate-1), var(--slate-2)); }
+  .decision.ERR { background: linear-gradient(120deg, color-mix(in srgb, var(--critical) 70%, #000), var(--critical)); }
+
+  .layout { display: grid; gap: 1rem; grid-template-columns: minmax(0, 1fr); align-items: start; }
+  @media (min-width: 1040px) { .layout { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .col { display: grid; gap: 1rem; min-width: 0; }
+  .box { background: var(--surface-1); border: 1px solid var(--border); border-radius: 1rem; padding: 0.95rem 1.1rem; box-shadow: var(--shadow); min-width: 0; }
+  .box h3 { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin: 0 0 0.7rem; font-weight: 800; }
+  .box h3 .live-tag { text-transform: none; letter-spacing: 0; font-weight: 700; margin-left: 0.4rem; color: var(--warning); }
+  .box h3 .final-tag { text-transform: none; letter-spacing: 0; font-weight: 700; margin-left: 0.4rem; color: var(--good); }
+
+  .ladder { position: relative; height: 4.2rem; margin: 0.6rem 0.6rem 0.4rem; }
+  .ladder .track { position: absolute; left: 0; right: 0; top: 1.75rem; height: 0.7rem; border-radius: 999px; background: var(--gridline); }
+  .ladder .band { position: absolute; top: 1.75rem; height: 0.7rem; background: color-mix(in srgb, var(--brand-c) 45%, transparent); border-radius: 3px; }
+  .ladder .mk { position: absolute; top: 1.5rem; width: 0.35rem; height: 1.2rem; border-radius: 3px; background: var(--surface-1); border: 2px solid var(--c, var(--text-primary)); transform: translateX(-50%); }
+  .ladder .tick { position: absolute; top: 2.85rem; transform: translateX(-50%); font-size: 0.66rem; font-weight: 800; color: var(--c, var(--text-secondary)); white-space: nowrap; }
+  .ladder .spot { position: absolute; top: 0; transform: translateX(-50%); text-align: center; font-weight: 800; font-size: 0.82rem; color: var(--accent); white-space: nowrap; }
+  .ladder .spot::after { content: "▼"; display: block; font-size: 0.7rem; line-height: 0.8; margin-top: 1px; }
+  .lvl-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.55rem; margin-top: 0.6rem; }
+  @media (max-width: 520px) { .lvl-grid { grid-template-columns: 1fr 1fr; } }
+  .lvl { border-radius: 0.75rem; padding: 0.5rem 0.7rem; background: var(--surface-2); border-left: 4px solid var(--c, var(--text-muted)); min-width: 0; }
+  .lvl .l { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700; }
+  .lvl .n { font-size: 1.15rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .lvl .d { font-size: 0.72rem; color: var(--text-secondary); }
+
+  .chart svg { width: 100%; height: 13rem; display: block; }
+  .legend { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.76rem; color: var(--text-secondary); margin-top: 0.4rem; }
+  .legend i { display: inline-block; width: 0.9rem; height: 0.3rem; border-radius: 2px; vertical-align: middle; margin-right: 0.3rem; }
+
+  .checklist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 560px) { .checklist-grid { grid-template-columns: 1fr; } }
+  .chead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.35rem; }
+  .cname { font-weight: 800; font-size: 0.95rem; }
+  .ccol.long .cname { color: var(--long); } .ccol.short .cname { color: var(--short); }
+  .cscore { font-size: 0.75rem; font-weight: 800; padding: 0.12rem 0.55rem; border-radius: 999px; background: var(--surface-2); color: var(--text-secondary); }
+  .ccol.long .cscore.full { background: var(--long); color: #fff; } .ccol.short .cscore.full { background: var(--short); color: #fff; }
+  .segs { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px; margin-bottom: 0.45rem; }
+  .segs i { height: 0.42rem; border-radius: 999px; background: var(--gridline); }
+  .ccol.long .segs i.on { background: var(--long); } .ccol.short .segs i.on { background: var(--short); }
+  .crit-row { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted); padding: 0.28rem 0; border-top: 1px solid var(--gridline); }
+  .crit-row:first-of-type { border-top: none; }
+  .crit-row .mark { width: 1.05rem; text-align: center; font-weight: 800; flex: none; }
+  .crit-row.met { color: var(--text-primary); }
+  .crit-row.met.long .mark { color: var(--long); } .crit-row.met.short .mark { color: var(--short); }
+  .meter { height: 0.5rem; border-radius: 999px; background: var(--gridline); overflow: hidden; margin-top: 0.4rem; }
+  .meter i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--warning), var(--good)); }
+  .note { color: var(--text-muted); font-size: 0.8rem; margin-top: 0.5rem; }
+
+  .tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.7rem; }
+  .tile { border-radius: 0.9rem; padding: 0.65rem 0.8rem; background: var(--surface-2); border: 1px solid var(--border); min-width: 0; }
+  .tile .v { font-size: 1.25rem; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.15; white-space: nowrap; }
+  .tile .k { font-size: 0.66rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; margin-top: 2px; }
+  .tile .v.good { color: var(--good); } .tile .v.bad { color: var(--critical); }
+  @media (max-width: 480px) { .tile { padding: 0.55rem; } .tile .v { font-size: 1rem; } .tile .k { font-size: 0.58rem; } }
+  .pos-empty { color: var(--text-muted); font-size: 0.92rem; }
+
+  .tbl { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { text-align: left; color: var(--text-muted); font-weight: 700; padding: 0.4rem; border-bottom: 2px solid var(--gridline); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; }
+  td { padding: 0.45rem 0.4rem; border-bottom: 1px solid var(--gridline); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr:last-child td { border-bottom: none; }
+  .empty-row td { color: var(--text-muted); text-align: center; padding: 1.1rem 0.4rem; white-space: normal; }
+  .side-pill { font-weight: 800; font-size: 0.7rem; padding: 0.12rem 0.55rem; border-radius: 999px; color: #fff; }
+  .side-pill.LONG { background: var(--long); } .side-pill.SHORT { background: var(--short); }
+  .reason { font-size: 0.74rem; padding: 0.1rem 0.5rem; border-radius: 999px; background: var(--surface-2); color: var(--text-secondary); }
+  .pos { color: var(--good); font-weight: 700; } .neg { color: var(--critical); font-weight: 700; }
+  details.bt summary { cursor: pointer; font-weight: 700; color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.6rem; }
+  .error-banner { border-radius: 0.9rem; padding: 0.65rem 1rem; font-weight: 600; font-size: 0.88rem; background: color-mix(in srgb, var(--critical) 13%, var(--surface-1)); color: var(--critical); border: 1px solid var(--critical); margin-bottom: 1rem; word-break: break-word; }
+  footer { margin-top: 1.4rem; font-size: 0.78rem; color: var(--text-muted); text-align: center; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="brand">
+      <div class="logo">▭</div>
+      <div>
+        <h1>NIFTY Range Breakout</h1>
+        <div class="tag">Multi-day range breakout &middot; daily bars &middot; 1 lot NIFTY futures equivalent</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+      <span class="paper-pill">PAPER</span>
+      <span class="hero-pill" id="clock">loading…</span>
+    </div>
+  </div>
+  <details class="rules">
+    <summary>Strategy rules</summary>
+    <p>Range = high/low of the 10 days before today, no wider than 4 × ATR20, with average volume below the 20 days before it.
+      LONG when today closes above the range high in an uptrend (close &gt; SMA50, SMA50 rising) on volume &ge; 1.5 × the range average; SHORT is the mirror.
+      Enter at the next day's open. Stop = range midpoint, target = range high + range height (short: low &minus; height), otherwise exit at the close of day 20.
+      One position at a time. P&amp;L in index points × 65 after 0.05 %/side costs. No orders are placed.</p>
+  </details>
+</header>
+
+<main class="page">
+  <div id="err"></div>
+  <section class="kpis" id="kpis"></section>
+  <section id="decision"></section>
+  <div class="layout">
+    <div class="col">
+      <div class="box" id="ladder-box"></div>
+      <div class="box"><h3>Last 60 sessions &middot; close vs 10-day range</h3><div class="chart" id="chart"></div>
+        <div class="legend"><span><i style="background:var(--accent)"></i>Close</span><span><i style="background:var(--good)"></i>Range high</span><span><i style="background:var(--critical)"></i>Range low</span></div></div>
+    </div>
+    <div class="col">
+      <div class="box" id="checks"></div>
+      <div class="box" id="position"></div>
+    </div>
+  </div>
+  <div class="box" style="margin-top:1rem;" id="trades"></div>
+  <div class="box" style="margin-top:1rem;" id="backtest"></div>
+  <footer>Reads live_state.json from this site every 60 s; the paper trader pushes it every few minutes.
+    Daily strategy: decisions are made on the daily close, so most days nothing happens. This page is read-only.</footer>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const n2 = (v) => Number(v).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const rs = (v) => (v >= 0 ? "+" : "−") + "₹" + Math.abs(Math.round(v)).toLocaleString("en-IN");
+const pts = (v) => (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(2);
+const day = (s) => s ? new Date(s + "T00:00:00").toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }) : "—";
+
+function stale(s) { return (Date.now() - new Date(s.last_tick).getTime()) / 60000 > 25; }
+
+function kpis(s) {
+  const t = s.totals, p = s.position, bt = s.backtest;
+  const st = stale(s) ? `<span class="st-pill stale"><span class="dot"></span>Stale</span>` : `<span class="st-pill live"><span class="dot"></span>Live</span>`;
+  const longFull = s.checks_long.every(([, ok]) => ok), shortFull = s.checks_short.every(([, ok]) => ok);
+  const verdict = longFull ? "LONG signal" : shortFull ? "SHORT signal" : "No signal";
+  const unreal = p ? (p.side === "LONG" ? 1 : -1) * (s.ltp - p.entry_px) : 0;
+  $("kpis").innerHTML = `
+    <div class="kpi hero-kpi ${t.rs >= 0 ? "good" : "bad"}"><div class="k">Paper P&amp;L (closed)</div><div class="v ${t.rs >= 0 ? "good" : "bad"}">${rs(t.rs)}</div><div class="s">${pts(t.pts)} pts · since ${day(s.paper_start)}</div></div>
+    <div class="kpi violet"><div class="k">Paper trades</div><div class="v">${t.n}</div><div class="s">${t.n ? `${t.wins} won · ${Math.round(100 * t.wins / t.n)}%` : "none yet — ~1.7 a year expected"}</div></div>
+    <div class="kpi ${p ? (p.side === "LONG" ? "blue" : "pink") : "teal"}"><div class="k">Position</div><div class="v">${p ? p.side : "Flat"}</div><div class="s">${p ? `${pts(unreal)} pts open · day ${p.days}/${s.rules.hold}` : (s.pending ? `${s.pending.side} at next open` : "waiting for a breakout")}</div></div>
+    <div class="kpi ${longFull || shortFull ? "good" : "warn"}"><div class="k">${esc(day(s.bar.date))} bar · ${s.bar.complete ? "final" : "forming"}</div><div class="v ${longFull || shortFull ? "good" : "warn"}" style="font-size:1.3rem;line-height:1.5;">${verdict}</div><div class="s">L ${s.checks_long.filter(([, o]) => o).length}/5 · S ${s.checks_short.filter(([, o]) => o).length}/5 conditions</div></div>
+    <div class="kpi ${stale(s) || s.engine_status !== "running" ? "bad" : "good"}"><div class="k">Engine</div><div class="v" style="font-size:1.05rem;line-height:1.9;">${st}</div><div class="s">${esc(s.engine_status)} · ${new Date(s.last_tick).toLocaleTimeString("en-IN")}</div></div>
+    <div class="kpi teal"><div class="k">Backtest ${bt.from.slice(0, 4)}–${bt.to.slice(0, 4)}</div><div class="v">${bt.n} <span class="muted" style="font-size:1rem;font-weight:600;">trades</span></div><div class="s">${bt.win}% win · PF ${bt.pf ?? "—"} · ${rs(bt.rs)}</div></div>`;
+}
+
+function decision(s) {
+  const el = $("decision"), p = s.position, q = s.pending;
+  const card = (cls, glyph, label, action, meta) => `<div class="decision ${cls}"><div class="glyph">${glyph}</div><div><div class="mi-label">${label}</div><div class="mi-action">${action}</div><div class="mi-meta">${meta}</div></div></div>`;
+  if (s.engine_status !== "running") { el.innerHTML = card("ERR", "!", "Engine", s.engine_status.replace("_", " ").toUpperCase(), esc(s.last_error || "")); return; }
+  if (p) { el.innerHTML = card(p.side, p.side === "LONG" ? "▲" : "▼", `Paper position since ${day(p.entry)}`, `${p.side} @ ${n2(p.entry_px)}`, `Stop ${n2(p.stop)} · target ${n2(p.target)} · day ${p.days} of ${s.rules.hold} · NIFTY ${n2(s.ltp)}`); return; }
+  if (q) { el.innerHTML = card(q.side, q.side === "LONG" ? "▲" : "▼", `Signal on ${day(q.signal)} close`, `${q.side} AT NEXT OPEN`, `Range ${n2(q.lo)}–${n2(q.hi)} · stop ${n2(q.stop)} · target ${n2(q.target)}`); return; }
+  el.innerHTML = card("WAIT", "…", "No position", "WAITING FOR BREAKOUT", s.bar.complete ? `Nothing to do on ${day(s.bar.date)}. Next check at the close of the next session.` : `Today's bar is still forming — the signal is decided on the close.`);
+}
+
+function ladder(s) {
+  const r = s.range, ltp = s.ltp;
+  const vals = [r.target_short, r.lo, r.mid, r.hi, r.target_long, ltp];
+  const a = Math.min(...vals), b = Math.max(...vals), pad = (b - a) * 0.04;
+  const pos = (v) => Math.min(99, Math.max(1, ((v - a + pad) / (b - a + 2 * pad)) * 100));
+  const mk = (v, label, c) => `<div class="mk" style="left:${pos(v)}%;--c:${c}"></div><div class="tick" style="left:${pos(v)}%;--c:${c}">${label}</div>`;
+  const gap = (v) => { const g = (v - ltp) / ltp * 100; return `${Math.abs(g).toFixed(2)}% ${g >= 0 ? "above" : "below"}`; };
+  const lvl = (l, v, c, d) => `<div class="lvl" style="--c:${c}"><div class="l">${l}</div><div class="n">${n2(v)}</div><div class="d">${d}</div></div>`;
+  $("ladder-box").innerHTML = `
+    <h3>10-day range ${day(r.from)} – ${day(r.to)}</h3>
+    <div class="ladder">
+      <div class="track"></div>
+      <div class="band" style="left:${pos(r.lo)}%;width:${pos(r.hi) - pos(r.lo)}%"></div>
+      ${mk(r.target_short, "T−", "var(--short)")}${mk(r.lo, "LOW", "var(--critical)")}${mk(r.mid, "MID", "var(--warning)")}${mk(r.hi, "HIGH", "var(--good)")}${mk(r.target_long, "T+", "var(--long)")}
+      <div class="spot" style="left:${pos(ltp)}%">${n2(ltp)}</div>
+    </div>
+    <div class="lvl-grid">
+      ${lvl("Range high", r.hi, "var(--good)", gap(r.hi) + " NIFTY")}
+      ${lvl("Range low", r.lo, "var(--critical)", gap(r.lo) + " NIFTY")}
+      ${lvl("Midpoint = stop", r.mid, "var(--warning)", `height ${n2(r.height)} pts`)}
+      ${lvl("Long target", r.target_long, "var(--long)", gap(r.target_long))}
+      ${lvl("Short target", r.target_short, "var(--short)", gap(r.target_short))}
+      ${lvl("Width", r.width_atr, r.width_atr <= s.rules.W ? "var(--good)" : "var(--critical)", `× ATR20 (${n2(r.atr)}) · max ${s.rules.W}×`)}
+    </div>`;
+}
+
+function chart(s) {
+  const h = s.history.filter((x) => Number.isFinite(x.hi));
+  if (h.length < 2) { $("chart").innerHTML = `<div class="pos-empty">Not enough history</div>`; return; }
+  const W = 600, H = 210, P = 8, L = 46;
+  const all = h.flatMap((x) => [x.close, x.hi, x.lo]);
+  const mn = Math.min(...all), mx = Math.max(...all), rg = mx - mn || 1;
+  const x = (i) => L + (W - L - P) * (i / (h.length - 1));
+  const y = (v) => H - P - (H - 2 * P) * ((v - mn) / rg);
+  const path = (k) => h.map((d, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(d[k]).toFixed(1)}`).join(" ");
+  const ticks = [mn, (mn + mx) / 2, mx].map((v) => `<text x="${L - 6}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="var(--text-muted)">${Math.round(v)}</text><line x1="${L}" x2="${W - P}" y1="${y(v)}" y2="${y(v)}" stroke="var(--gridline)"/>`).join("");
+  const last = h[h.length - 1];
+  $("chart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="NIFTY close with rolling 10-day range">
+    ${ticks}
+    <path d="${path("hi")}" fill="none" stroke="var(--good)" stroke-width="1.6" stroke-dasharray="5 3"/>
+    <path d="${path("lo")}" fill="none" stroke="var(--critical)" stroke-width="1.6" stroke-dasharray="5 3"/>
+    <path d="${path("close")}" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linejoin="round"/>
+    <circle cx="${x(h.length - 1)}" cy="${y(last.close)}" r="4.5" fill="var(--accent)" stroke="var(--surface-1)" stroke-width="2"/>
+  </svg><div class="legend"><span>${day(h[0].date)} → ${day(last.date)}</span></div>`;
+}
+
+function checks(s) {
+  const col = (name, rows, dir) => {
+    const met = rows.filter(([, ok]) => ok).length, full = met === rows.length;
+    return `<div class="ccol ${dir}"><div class="chead"><span class="cname">${name}</span><span class="cscore ${full ? "full" : ""}">${met}/${rows.length}${full ? " · SIGNAL" : ""}</span></div>
+      <div class="segs">${rows.map(([, ok]) => `<i class="${ok ? "on" : ""}"></i>`).join("")}</div>
+      ${rows.map(([l, ok]) => `<div class="crit-row ${ok ? "met " + dir : ""}"><span class="mark">${ok ? "✓" : "·"}</span><span>${esc(l)}</span></div>`).join("")}</div>`;
+  };
+  const v = s.volume, pct = Math.min(100, (v.today / v.needed) * 100);
+  $("checks").innerHTML = `
+    <h3>Entry checklist · ${esc(day(s.bar.date))} ${s.bar.complete ? `<span class="final-tag">final (closed)</span>` : `<span class="live-tag">live — decided at the close</span>`}</h3>
+    <div class="checklist-grid">${col("Long", s.checks_long, "long")}${col("Short", s.checks_short, "short")}</div>
+    <div class="note">Volume vs breakout requirement: <b>${(v.today / 1e6).toFixed(0)}M</b> of <b>${(v.needed / 1e6).toFixed(0)}M</b> (${Math.round(pct)}%)</div>
+    <div class="meter"><i style="width:${pct}%"></i></div>
+    ${s.position ? `<div class="note">A position is open, so new signals are ignored until it closes (same as the backtest).</div>` : ""}
+    <div class="note">Volume is the NIFTY constituents' traded volume from Dhan. Until Dhan publishes the daily bar, it is summed from 1-minute data, which runs about 4 % low.</div>`;
+}
+
+function position(s) {
+  const p = s.position;
+  if (!p) { $("position").innerHTML = `<h3>Open position &amp; exit checklist</h3><div class="pos-empty">Flat. ${s.pending ? `Entering ${s.pending.side} at the next open.` : "No position."}</div>`; return; }
+  const dir = p.side === "LONG" ? 1 : -1, u = dir * (s.ltp - p.entry_px), urs = (u - 2 * s.rules.cost_pct_side / 100 * p.entry_px) * s.rules.lot;
+  const row = (l, ok) => `<div class="crit-row ${ok ? "met " + p.side.toLowerCase() : ""}"><span class="mark">${ok ? "✓" : "·"}</span><span>${l}</span></div>`;
+  $("position").innerHTML = `
+    <h3>Open position &amp; exit checklist</h3>
+    <div class="tiles">
+      <div class="tile"><div class="v">${n2(p.entry_px)}</div><div class="k">${p.side} entry · ${day(p.entry)}</div></div>
+      <div class="tile"><div class="v ${u >= 0 ? "good" : "bad"}">${pts(u)}</div><div class="k">Open points</div></div>
+      <div class="tile"><div class="v ${urs >= 0 ? "good" : "bad"}">${rs(urs)}</div><div class="k">Open ₹ / lot, net</div></div>
+    </div>
+    <div style="margin-top:0.7rem;">
+      ${row(`Stop ${n2(p.stop)} (range midpoint) touched`, false)}
+      ${row(`Target ${n2(p.target)} (measured move) touched`, false)}
+      ${row(`Day ${p.days} of ${s.rules.hold} — time exit at the close of day ${s.rules.hold}`, p.days >= s.rules.hold)}
+    </div>
+    <div class="note">Stop and target are checked against the day's high and low. A gap through either fills at the open.</div>`;
+}
+
+function trades(s) {
+  const rows = s.trades.map((t) => `<tr><td>${day(t.entry)}</td><td>${day(t.exit)}</td><td><span class="side-pill ${t.side}">${t.side}</span></td>
+    <td>${n2(t.entry_px)}</td><td>${n2(t.exit_px)}</td><td>${t.days}</td><td><span class="reason">${t.reason}</span></td>
+    <td class="${t.pts >= 0 ? "pos" : "neg"}">${pts(t.pts)}</td><td class="${t.rs >= 0 ? "pos" : "neg"}">${rs(t.rs)}</td></tr>`).join("");
+  $("trades").innerHTML = `<h3>Paper trades</h3><div class="tbl"><table><thead><tr><th>Entry</th><th>Exit</th><th>Side</th><th>Entry px</th><th>Exit px</th><th>Days</th><th>Why</th><th>Points</th><th>₹ / lot net</th></tr></thead>
+    <tbody>${rows || `<tr class="empty-row"><td colspan="9">No closed paper trades yet. Started ${day(s.paper_start)}. The backtest averaged about 1.7 trades a year, so expect long quiet stretches.</td></tr>`}</tbody></table></div>`;
+}
+
+function backtest(s) {
+  const b = s.backtest;
+  let c = 0;
+  const eq = [0, ...b.trades.map((t) => (c += t.rs))];
+  const W = 600, H = 90, P = 6, mn = Math.min(...eq), mx = Math.max(...eq), rg = mx - mn || 1;
+  const x = (i) => P + (W - 2 * P) * (i / (eq.length - 1 || 1)), y = (v) => H - P - (H - 2 * P) * ((v - mn) / rg);
+  const line = eq.map((v, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
+  const rows = b.trades.slice().reverse().map((t) => `<tr><td>${day(t.entry)}</td><td>${day(t.exit)}</td><td><span class="side-pill ${t.side}">${t.side}</span></td>
+    <td>${n2(t.entry_px)}</td><td>${n2(t.exit_px)}</td><td>${t.days}</td><td class="${t.net_pct >= 0 ? "pos" : "neg"}">${t.net_pct.toFixed(2)}%</td><td class="${t.rs >= 0 ? "pos" : "neg"}">${rs(t.rs)}</td></tr>`).join("");
+  $("backtest").innerHTML = `<h3>Backtest reference · same rules, ${day(b.from)} – ${day(b.to)}</h3>
+    <div class="tiles"><div class="tile"><div class="v">${b.n}</div><div class="k">Trades · ${b.win}% win</div></div>
+      <div class="tile"><div class="v good">${b.mean_pct.toFixed(2)}%</div><div class="k">Net per trade · PF ${b.pf ?? "—"}</div></div>
+      <div class="tile"><div class="v ${b.rs >= 0 ? "good" : "bad"}">${rs(b.rs)}</div><div class="k">₹ / lot, at today's lot 65</div></div></div>
+    <div class="chart" style="margin-top:0.7rem;"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="height:5.5rem" role="img" aria-label="Backtest equity, rupees per lot">
+      <line x1="${P}" x2="${W - P}" y1="${y(0)}" y2="${y(0)}" stroke="var(--gridline)" stroke-dasharray="4 4"/>
+      <path d="${line}" fill="none" stroke="var(--good)" stroke-width="2.4" stroke-linejoin="round"/></svg></div>
+    <div class="note">Caveats: 21 trades in 11+ years is a small sample. The same rules lost on BANKNIFTY and on BAJFINANCE. This paper run is the out-of-sample test.</div>
+    <details class="bt"><summary>All ${b.n} backtest trades</summary><div class="tbl"><table><thead><tr><th>Entry</th><th>Exit</th><th>Side</th><th>Entry px</th><th>Exit px</th><th>Days</th><th>Net %</th><th>₹ / lot</th></tr></thead><tbody>${rows}</tbody></table></div></details>`;
+}
+
+async function refresh() {
+  let s;
+  try {
+    const r = await fetch("live_state.json?t=" + Date.now(), { cache: "no-store" });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    s = await r.json();
+  } catch (e) { $("err").innerHTML = `<div class="error-banner">Failed to load live_state.json — ${esc(e.message)}</div>`; return; }
+  $("err").innerHTML = s.last_error ? `<div class="error-banner">${esc(s.last_error)}</div>` : "";
+  for (const f of [kpis, decision, ladder, chart, checks, position, trades, backtest]) {
+    try { f(s); } catch (e) { console.error(f.name, e); }
+  }
+  $("clock").textContent = "Updated " + new Date().toLocaleTimeString("en-IN") + " · refreshes every 60s";
+}
+refresh();
+setInterval(refresh, 60000);
+</script>
+</body>
+</html>
