@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Range Breakout — F&amp;O Universe</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root {
+    color-scheme: light;
+    --page: #eceff8; --surface-1: #ffffff; --surface-2: #f3f5fb;
+    --text-primary: #0e1320; --text-secondary: #4f5a74; --text-muted: #76829c;
+    --gridline: #e2e7f1; --border: rgba(14,19,32,0.10);
+    --shadow: 0 1px 2px rgba(14,19,32,0.06), 0 8px 24px rgba(40,50,110,0.08);
+    --brand-a: #4338ca; --brand-b: #7c3aed; --brand-c: #0d9488; --accent: #4f46e5;
+    --long: #2563eb; --short: #d6336c; --good: #12a150; --warning: #c77d00; --critical: #dc3545;
+    --slate-1: #1b2340; --slate-2: #2d3a66;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --page: #090c14; --surface-1: #131a29; --surface-2: #1a2336;
+      --text-primary: #eef1f9; --text-secondary: #a0abc4; --text-muted: #7f8aa3;
+      --gridline: #253048; --border: rgba(238,241,249,0.11);
+      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 10px 28px rgba(0,0,0,0.35);
+      --brand-a: #4f46e5; --brand-b: #8b5cf6; --brand-c: #14b8a6; --accent: #9b8cf3;
+      --long: #4a8cf0; --short: #e0578a; --good: #2bc85a; --warning: #f2b636; --critical: #f0645f;
+      --slate-1: #0f1630; --slate-2: #26305a;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { font-size: clamp(15px, 0.55vw + 9px, 19px); }
+  body { margin: 0; color: var(--text-primary); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.4;
+    background: radial-gradient(1100px 480px at 8% -8%, color-mix(in srgb, var(--brand-b) 16%, transparent), transparent 70%),
+      radial-gradient(900px 480px at 100% 0%, color-mix(in srgb, var(--brand-c) 14%, transparent), transparent 70%), var(--page);
+    background-attachment: fixed; }
+  .muted { color: var(--text-muted); }
+  .hero { background: linear-gradient(115deg, var(--brand-a) 0%, var(--brand-b) 52%, var(--brand-c) 100%); color: #fff; padding: 1.05rem clamp(14px, 2vw, 32px) 0.9rem; box-shadow: 0 6px 26px rgba(67,56,202,0.28); }
+  .hero-inner { max-width: 1800px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 0.9rem; }
+  .logo { width: 2.5rem; height: 2.5rem; border-radius: 0.8rem; background: rgba(255,255,255,0.18); display: grid; place-items: center; font-size: 1.35rem; }
+  h1 { font-size: 1.45rem; margin: 0; font-weight: 800; letter-spacing: -0.015em; }
+  .tag { font-size: 0.86rem; opacity: 0.88; margin-top: 1px; }
+  a.btn { background: #fff; color: var(--brand-a); text-decoration: none; font-weight: 700; font-size: 0.88rem; padding: 0.45rem 0.95rem; border-radius: 999px; box-shadow: 0 2px 10px rgba(0,0,0,0.18); }
+  .page { max-width: 1800px; margin: 0 auto; padding: 1.1rem clamp(14px, 2vw, 32px) 2rem; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(165px, 100%), 1fr)); gap: 0.9rem; margin-bottom: 1rem; }
+  .kpi { position: relative; overflow: hidden; background: var(--surface-1); border: 1px solid var(--border); border-radius: 1rem; padding: 0.95rem 1.1rem; box-shadow: var(--shadow); min-width: 0; }
+  .kpi::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--kc, var(--accent)); }
+  .kpi .k { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); font-weight: 700; }
+  .kpi .v { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; margin-top: 0.1rem; line-height: 1.15; }
+  .kpi .s { font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.15rem; }
+  .kpi.good { --kc: var(--good); } .kpi.bad { --kc: var(--critical); } .kpi.warn { --kc: var(--warning); } .kpi.teal { --kc: var(--brand-c); }
+  .v.good { color: var(--good); } .v.bad { color: var(--critical); }
+  .verdict { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.3rem; border-radius: 1.1rem; color: #fff; box-shadow: var(--shadow); margin-bottom: 1rem; }
+  .verdict .glyph { width: 3.1rem; height: 3.1rem; border-radius: 50%; background: rgba(255,255,255,0.2); display: grid; place-items: center; font-size: 1.5rem; font-weight: 800; flex: none; }
+  .verdict .t { font-size: 1.35rem; font-weight: 800; line-height: 1.2; }
+  .verdict .m { font-size: 0.88rem; opacity: 0.92; margin-top: 0.2rem; }
+  .verdict.yes { background: linear-gradient(120deg, color-mix(in srgb, var(--good) 72%, #000), var(--good)); }
+  .verdict.no { background: linear-gradient(120deg, var(--slate-1), var(--slate-2)); }
+  .grid2 { display: grid; gap: 1rem; grid-template-columns: minmax(0, 1fr); margin-bottom: 1rem; }
+  @media (min-width: 1040px) { .grid2 { grid-template-columns: 3fr 2fr; } }
+  .box { background: var(--surface-1); border: 1px solid var(--border); border-radius: 1rem; padding: 0.95rem 1.1rem; box-shadow: var(--shadow); min-width: 0; }
+  .box h3 { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin: 0 0 0.7rem; font-weight: 800; }
+  .tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem; }
+  .tile { border-radius: 0.9rem; padding: 0.65rem 0.8rem; background: var(--surface-2); border: 1px solid var(--border); min-width: 0; }
+  .tile .v { font-size: 1.2rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .tile .k { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+  .tile .s { font-size: 0.78rem; color: var(--text-secondary); }
+  .years svg { width: 100%; height: 15rem; display: block; }
+  .bar:hover { opacity: 0.8; }
+  .tip { position: fixed; pointer-events: none; background: var(--surface-1); border: 1px solid var(--border); box-shadow: var(--shadow); border-radius: 0.6rem; padding: 0.4rem 0.6rem; font-size: 0.8rem; display: none; z-index: 10; }
+  .note { color: var(--text-muted); font-size: 0.8rem; margin-top: 0.6rem; }
+  .controls { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; margin-bottom: 0.6rem; }
+  .controls input { font: inherit; font-size: 0.88rem; padding: 0.4rem 0.7rem; border-radius: 0.6rem; border: 1px solid var(--border); background: var(--surface-2); color: var(--text-primary); min-width: 12rem; }
+  .tbl { overflow-x: auto; max-height: 34rem; overflow-y: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { position: sticky; top: 0; background: var(--surface-1); text-align: left; color: var(--text-muted); font-weight: 700; padding: 0.45rem 0.4rem; border-bottom: 2px solid var(--gridline); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; cursor: pointer; user-select: none; }
+  th.sorted::after { content: " ▾"; } th.sorted.asc::after { content: " ▴"; }
+  td { padding: 0.42rem 0.4rem; border-bottom: 1px solid var(--gridline); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tbody tr { cursor: pointer; } tbody tr:hover td { background: var(--surface-2); } tr.sel td { background: color-mix(in srgb, var(--accent) 12%, var(--surface-1)); }
+  .pos { color: var(--good); font-weight: 700; } .neg { color: var(--critical); font-weight: 700; }
+  .pill { font-weight: 800; font-size: 0.68rem; padding: 0.1rem 0.5rem; border-radius: 999px; color: #fff; }
+  .pill.LONG { background: var(--long); } .pill.SHORT { background: var(--short); } .pill.luck { background: var(--good); }
+  footer { margin-top: 1.4rem; font-size: 0.78rem; color: var(--text-muted); text-align: center; }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="brand"><div class="logo">▦</div>
+      <div><h1>Range Breakout · F&amp;O Universe</h1><div class="tag">NIFTY rules unchanged, run on every NSE F&amp;O stock · daily bars · backtest only</div></div></div>
+    <a class="btn" href="index.html">&larr; NIFTY paper dashboard</a>
+  </div>
+</header>
+<main class="page">
+  <div id="verdict"></div>
+  <section class="kpis" id="kpis"></section>
+  <div class="grid2">
+    <div class="box"><h3>Net % per trade by year · all stocks pooled</h3><div class="years" id="years"></div><div class="note">Bar = average net % per trade that year; label = trade count. Hover for details.</div></div>
+    <div class="box"><h3>Where it works / doesn't</h3><div class="tiles" id="splits"></div><div class="note" id="method"></div></div>
+  </div>
+  <div class="box" style="margin-bottom:1rem;">
+    <h3>Leaderboard · click a stock for its trades</h3>
+    <div class="controls"><input id="q" type="search" placeholder="Filter symbol…" aria-label="Filter symbols"><span class="muted" id="count"></span></div>
+    <div class="tbl"><table id="board"><thead><tr>
+      <th data-k="symbol">Stock</th><th data-k="n">Trades</th><th data-k="win">Win %</th><th data-k="mean">Net %/trade</th><th data-k="total" class="sorted">Total %</th>
+      <th data-k="pf">PF</th><th data-k="rs">₹ / lot</th><th data-k="p_null">p vs random</th><th data-k="since">Data from</th></tr></thead><tbody></tbody></table></div>
+    <div class="note">Per-stock rankings are mostly noise at ~20 trades per stock. "₹ / lot" applies today's lot size to every trade, so it can disagree with the % columns when a stock's price changed a lot. "p vs random" is not corrected for testing 200+ stocks; only a stock above the luck ceiling (green tag) clears that bar.</div>
+  </div>
+  <div class="box"><h3 id="tt">Trades</h3><div class="tbl"><table><thead><tr><th>Stock</th><th>Signal</th><th>Entry</th><th>Exit</th><th>Side</th><th>Entry px</th><th>Exit px</th><th>Days</th><th>Net %</th><th>₹ / lot</th></tr></thead><tbody id="trades"></tbody></table></div></div>
+  <footer id="foot"></footer>
+</main>
+<div class="tip" id="tip"></div>
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const pct = (v, d = 2) => v == null ? "—" : (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(d) + "%";
+const rs = (v) => (v >= 0 ? "+" : "−") + "₹" + Math.abs(Math.round(v)).toLocaleString("en-IN");
+const cls = (v) => v == null ? "" : v >= 0 ? "pos" : "neg";
+let R, sortK = "total", asc = false, sel = null;
+
+function verdict() {
+  const p = R.pooled, edge = p.ci[0] > 0 && p.p_null < 0.05;
+  $("verdict").innerHTML = `<div class="verdict ${edge ? "yes" : "no"}"><div class="glyph">${edge ? "✓" : "≈"}</div><div>
+    <div class="t">${edge ? "Positive after costs across the universe" : "No reliable edge across F&O stocks"}</div>
+    <div class="m">${p.n.toLocaleString("en-IN")} trades on ${R.with_trades} stocks: ${pct(p.mean)} net per trade (95% CI ${pct(p.ci[0])} to ${pct(p.ci[1])}),
+      random entries with the same exits average ${pct(p.null_mean)} (p ${p.p_null}). ${R.beats_luck.length} of ${R.stocks_tested} stocks beat the luck ceiling.</div></div></div>`;
+}
+
+function kpis() {
+  const p = R.pooled;
+  const k = (c, label, v, s, vc = "") => `<div class="kpi ${c}"><div class="k">${label}</div><div class="v ${vc}">${v}</div><div class="s">${s}</div></div>`;
+  $("kpis").innerHTML =
+    k("teal", "Stocks", R.with_trades, `with trades · ${R.stocks_tested} tested`) +
+    k("teal", "Trades", p.n.toLocaleString("en-IN"), `${R.start.slice(0, 4)}–${R.end.slice(0, 4)} · ~${(p.n / R.with_trades).toFixed(0)} per stock`) +
+    k(p.win >= 50 ? "good" : "warn", "Win rate", p.win + "%", `NIFTY itself: 81%`) +
+    k(p.mean >= 0 ? "good" : "bad", "Net per trade", pct(p.mean), `gross ${pct(p.gross_mean)} · ${R.rules.cost_pct_side}%/side cost`, p.mean >= 0 ? "good" : "bad") +
+    k(p.pf >= 1 ? "good" : "bad", "Profit factor", p.pf ?? "—", `CI ${pct(p.ci[0])} … ${pct(p.ci[1])}`) +
+    k(R.profitable / R.with_trades >= 0.5 ? "good" : "bad", "Profitable stocks", `${R.profitable}/${R.with_trades}`, `${Math.round(100 * R.profitable / R.with_trades)}% · beat luck: ${R.beats_luck.length}`);
+}
+
+function years() {
+  const ys = Object.entries(R.by_year).filter(([, v]) => v.n);
+  const W = 640, H = 240, L = 44, B = 24, T = 18;
+  const vals = ys.map(([, v]) => v.mean), mx = Math.max(0.5, ...vals.map(Math.abs));
+  const y = (v) => T + (H - T - B) * (1 - (v + mx) / (2 * mx));
+  const bw = (W - L - 8) / ys.length;
+  const bars = ys.map(([yr, v], i) => {
+    const x = L + i * bw + bw * 0.18, w = bw * 0.64, y0 = y(0), y1 = y(v.mean), top = Math.min(y0, y1), h = Math.max(2, Math.abs(y1 - y0));
+    return `<rect class="bar" data-tip="${yr}: ${v.n} trades · ${pct(v.mean)} per trade · ${v.win}% win · PF ${v.pf ?? "—"}" x="${x}" y="${top}" width="${w}" height="${h}" rx="4" fill="${v.mean >= 0 ? "var(--good)" : "var(--critical)"}"/>
+      <text x="${x + w / 2}" y="${v.mean >= 0 ? top - 4 : y0 - 4}" text-anchor="middle" font-size="10" fill="var(--text-muted)">${v.n}</text>
+      <text x="${x + w / 2}" y="${H - 6}" text-anchor="middle" font-size="11" fill="var(--text-secondary)">${yr.slice(2)}</text>`;
+  }).join("");
+  const grid = [-mx, -mx / 2, 0, mx / 2, mx].map((v) => `<line x1="${L}" x2="${W - 4}" y1="${y(v)}" y2="${y(v)}" stroke="var(--gridline)" ${v === 0 ? 'stroke-width="1.5"' : ""}/>
+    <text x="${L - 6}" y="${y(v) + 4}" text-anchor="end" font-size="10" fill="var(--text-muted)">${pct(v, 1)}</text>`).join("");
+  $("years").innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Average net percent per trade by year">${grid}${bars}</svg>`;
+}
+
+function splits() {
+  const p = R.pooled;
+  const t = (label, s) => `<div class="tile"><div class="k">${label}</div><div class="v ${cls(s.mean)}">${pct(s.mean)}</div><div class="s">${s.n} trades · ${s.win}% win · PF ${s.pf ?? "—"}</div></div>`;
+  $("splits").innerHTML = t("Longs", p.long) + t("Shorts", p.short) + t("2014–2020", p.pre2021) + t("2021–now", p.post2021);
+  $("method").innerHTML = `Rules unchanged from NIFTY: ${R.rules.N}-day range ≤ ${R.rules.W}× ATR20, quiet range volume, SMA50 trend, breakout close on ≥ ${R.rules.V}× volume;
+    next-open entry, stop at the range midpoint, measured-move target, ${R.rules.hold}-day time exit. Signals are skipped around suspected splits (Dhan daily volume is not split-adjusted).
+    Luck ceiling = 95th percentile of the best stock's total under random entries (${pct(R.luck_ceiling_total, 1)}). CI clustered by entry week.`;
+}
+
+function board() {
+  const q = $("q").value.trim().toUpperCase();
+  const rows = R.stocks.filter((s) => s.n && s.symbol.includes(q)).sort((a, b) => {
+    const x = a[sortK] ?? -1e9, y = b[sortK] ?? -1e9;
+    return (typeof x === "string" ? x.localeCompare(y) : x - y) * (asc ? 1 : -1);
+  });
+  $("count").textContent = `${rows.length} stocks`;
+  document.querySelector("#board tbody").innerHTML = rows.map((s) => `<tr data-s="${esc(s.symbol)}" class="${s.symbol === sel ? "sel" : ""}">
+    <td><b>${esc(s.symbol)}</b> ${s.beats_luck ? '<span class="pill luck">beats luck</span>' : ""}</td><td>${s.n}</td><td>${s.win}</td>
+    <td class="${cls(s.mean)}">${pct(s.mean)}</td><td class="${cls(s.total)}">${pct(s.total, 1)}</td><td>${s.pf ?? "—"}</td>
+    <td class="${cls(s.rs)}">${rs(s.rs)}</td><td>${s.p_null ?? "—"}</td><td class="muted">${s.since}</td></tr>`).join("");
+  document.querySelectorAll("#board th").forEach((th) => { th.classList.toggle("sorted", th.dataset.k === sortK); th.classList.toggle("asc", th.dataset.k === sortK && asc); });
+}
+
+function trades() {
+  const list = (sel ? R.trades.filter((t) => t.symbol === sel) : R.trades.slice(-150)).slice().reverse();
+  $("tt").textContent = sel ? `Trades · ${sel}` : `Most recent 150 trades · all stocks`;
+  $("trades").innerHTML = list.map((t) => `<tr><td><b>${esc(t.symbol)}</b></td><td>${t.signal}</td><td>${t.entry}</td><td>${t.exit}</td><td><span class="pill ${t.side}">${t.side}</span></td>
+    <td>${t.entry_px.toLocaleString("en-IN")}</td><td>${t.exit_px.toLocaleString("en-IN")}</td><td>${t.days}</td><td class="${cls(t.net)}">${pct(t.net)}</td><td class="${cls(t.rs)}">${rs(t.rs)}</td></tr>`).join("");
+}
+
+fetch("universe_data.json?t=" + Date.now(), { cache: "no-store" }).then((r) => r.json()).then((data) => {
+  R = data;
+  for (const f of [verdict, kpis, years, splits, board, trades]) { try { f(); } catch (e) { console.error(f.name, e); } }
+  $("foot").textContent = `Backtest generated ${R.generated} · data ${R.start} → ${R.end} · Dhan NSE daily · underlying prices (stock futures/options fills differ) · ₹ per lot uses today's lot sizes.`;
+  $("q").addEventListener("input", board);
+  document.querySelectorAll("#board th").forEach((th) => th.addEventListener("click", () => {
+    asc = sortK === th.dataset.k ? !asc : th.dataset.k === "symbol";
+    sortK = th.dataset.k; board();
+  }));
+  document.querySelector("#board tbody").addEventListener("click", (e) => {
+    const tr = e.target.closest("tr"); if (!tr) return;
+    sel = sel === tr.dataset.s ? null : tr.dataset.s; board(); trades();
+  });
+  const tip = $("tip");
+  $("years").addEventListener("mousemove", (e) => {
+    const t = e.target.dataset && e.target.dataset.tip;
+    if (!t) { tip.style.display = "none"; return; }
+    tip.textContent = t; tip.style.display = "block"; tip.style.left = e.clientX + 12 + "px"; tip.style.top = e.clientY + 12 + "px";
+  });
+  $("years").addEventListener("mouseleave", () => (tip.style.display = "none"));
+}).catch((e) => { $("verdict").innerHTML = `<div class="box">Failed to load universe_data.json — ${esc(e.message)}</div>`; });
+</script>
+</body>
+</html>
