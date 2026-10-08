@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>NIFTY Range Breakout — Paper</title>
+<title>Range Breakout — Paper</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
   :root {
@@ -148,6 +148,16 @@
   .pos { color: var(--good); font-weight: 700; } .neg { color: var(--critical); font-weight: 700; }
   details.bt summary { cursor: pointer; font-weight: 700; color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.6rem; }
   .error-banner { border-radius: 0.9rem; padding: 0.65rem 1rem; font-weight: 600; font-size: 0.88rem; background: color-mix(in srgb, var(--critical) 13%, var(--surface-1)); color: var(--critical); border: 1px solid var(--critical); margin-bottom: 1rem; word-break: break-word; }
+  .ov td, .ov th { white-space: nowrap; }
+  .ov tbody tr { cursor: pointer; } .ov tbody tr:hover td { background: var(--surface-2); }
+  .ov tr.sel td { background: color-mix(in srgb, var(--accent) 12%, var(--surface-1)); }
+  .ov tr.sel td:first-child { box-shadow: inset 4px 0 0 var(--accent); }
+  .kind { font-size: 0.64rem; font-weight: 800; letter-spacing: 0.05em; padding: 0.08rem 0.45rem; border-radius: 999px; background: var(--surface-2); color: var(--text-muted); margin-left: 0.35rem; }
+  .score { font-weight: 800; } .score.full { color: #fff; padding: 0.08rem 0.45rem; border-radius: 999px; }
+  .score.full.long { background: var(--long); } .score.full.short { background: var(--short); }
+  .w-ok { color: var(--good); font-weight: 700; } .w-bad { color: var(--text-muted); }
+  .detail-title { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; margin: 1.3rem 0 0.8rem; font-size: 1.25rem; font-weight: 800; }
+  .detail-title small { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
   footer { margin-top: 1.4rem; font-size: 0.78rem; color: var(--text-muted); text-align: center; }
 </style>
 </head>
@@ -158,8 +168,8 @@
     <div class="brand">
       <div class="logo">▭</div>
       <div>
-        <h1>NIFTY Range Breakout</h1>
-        <div class="tag">Multi-day range breakout &middot; daily bars &middot; 1 lot NIFTY futures equivalent</div>
+        <h1>Range Breakout · Indices + NIFTY IT</h1>
+        <div class="tag">Multi-day range breakout &middot; daily bars &middot; NIFTY, SENSEX, BANKNIFTY + 10 NIFTY IT stocks &middot; 1 futures lot each</div>
       </div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
@@ -173,13 +183,15 @@
     <p>Range = high/low of the 10 days before today, no wider than 4 × ATR20, with average volume below the 20 days before it.
       LONG when today closes above the range high in an uptrend (close &gt; SMA50, SMA50 rising) on volume &ge; 1.5 × the range average; SHORT is the mirror.
       Enter at the next day's open. Stop = range midpoint, target = range high + range height (short: low &minus; height), otherwise exit at the close of day 20.
-      One position at a time. P&amp;L in index points × 65 after 0.05 %/side costs. No orders are placed.</p>
+      One position at a time per instrument. P&amp;L per 1 futures lot (NIFTY 65, SENSEX 20, BANKNIFTY 30, stocks at their F&amp;O lot) after 0.05 %/side costs. Stocks skip signals for a month after a suspected split. No orders are placed.</p>
   </details>
 </header>
 
 <main class="page">
   <div id="err"></div>
   <section class="kpis" id="kpis"></section>
+  <div class="box" id="overview"></div>
+  <div class="detail-title" id="detail-title"></div>
   <section id="decision"></section>
   <div class="layout">
     <div class="col">
@@ -208,26 +220,50 @@ const day = (s) => s ? new Date(s + "T00:00:00").toLocaleDateString("en-IN", { d
 
 function stale(s) { return (Date.now() - new Date(s.last_tick).getTime()) / 60000 > 25; }
 
-function kpis(s) {
-  const t = s.totals, p = s.position, bt = s.backtest;
-  const st = stale(s) ? `<span class="st-pill stale"><span class="dot"></span>Stale</span>` : `<span class="st-pill live"><span class="dot"></span>Live</span>`;
-  const longFull = s.checks_long.every(([, ok]) => ok), shortFull = s.checks_short.every(([, ok]) => ok);
-  const verdict = longFull ? "LONG signal" : shortFull ? "SHORT signal" : "No signal";
-  const unreal = p ? (p.side === "LONG" ? 1 : -1) * (s.ltp - p.entry_px) : 0;
+function kpis(R) {
+  const all = R.order.map((k) => R.instruments[k]).filter((i) => i && i.totals);
+  const rsum = all.reduce((a, i) => a + i.totals.rs, 0), n = all.reduce((a, i) => a + i.totals.n, 0), w = all.reduce((a, i) => a + i.totals.wins, 0);
+  const open = all.filter((i) => i.position), pend = all.filter((i) => i.pending);
+  const sig = all.filter((i) => i.checks_long.every(([, o]) => o) || i.checks_short.every(([, o]) => o));
+  const bad = R.engine_status !== "running" || stale(R);
+  const st = stale(R) ? `<span class="st-pill stale"><span class="dot"></span>Stale</span>` : `<span class="st-pill live"><span class="dot"></span>Live</span>`;
+  const btN = all.reduce((a, i) => a + (i.backtest ? i.backtest.n : 0), 0);
   $("kpis").innerHTML = `
-    <div class="kpi hero-kpi ${t.rs >= 0 ? "good" : "bad"}"><div class="k">Paper P&amp;L (closed)</div><div class="v ${t.rs >= 0 ? "good" : "bad"}">${rs(t.rs)}</div><div class="s">${pts(t.pts)} pts · since ${day(s.paper_start)}</div></div>
-    <div class="kpi violet"><div class="k">Paper trades</div><div class="v">${t.n}</div><div class="s">${t.n ? `${t.wins} won · ${Math.round(100 * t.wins / t.n)}%` : "none yet — ~1.7 a year expected"}</div></div>
-    <div class="kpi ${p ? (p.side === "LONG" ? "blue" : "pink") : "teal"}"><div class="k">Position</div><div class="v">${p ? p.side : "Flat"}</div><div class="s">${p ? `${pts(unreal)} pts open · day ${p.days}/${s.rules.hold}` : (s.pending ? `${s.pending.side} at next open` : "waiting for a breakout")}</div></div>
-    <div class="kpi ${longFull || shortFull ? "good" : "warn"}"><div class="k">${esc(day(s.bar.date))} bar · ${s.bar.complete ? "final" : "forming"}</div><div class="v ${longFull || shortFull ? "good" : "warn"}" style="font-size:1.3rem;line-height:1.5;">${verdict}</div><div class="s">L ${s.checks_long.filter(([, o]) => o).length}/5 · S ${s.checks_short.filter(([, o]) => o).length}/5 conditions</div></div>
-    <div class="kpi ${stale(s) || s.engine_status !== "running" ? "bad" : "good"}"><div class="k">Engine</div><div class="v" style="font-size:1.05rem;line-height:1.9;">${st}</div><div class="s">${esc(s.engine_status)} · ${new Date(s.last_tick).toLocaleTimeString("en-IN")}</div></div>
-    <div class="kpi teal"><div class="k">Backtest ${bt.from.slice(0, 4)}–${bt.to.slice(0, 4)}</div><div class="v">${bt.n} <span class="muted" style="font-size:1rem;font-weight:600;">trades</span></div><div class="s">${bt.win}% win · PF ${bt.pf ?? "—"} · ${rs(bt.rs)}</div></div>`;
+    <div class="kpi hero-kpi ${rsum >= 0 ? "good" : "bad"}"><div class="k">Paper P&amp;L (closed, all)</div><div class="v ${rsum >= 0 ? "good" : "bad"}">${rs(rsum)}</div><div class="s">1 lot each · ${all.length} instruments</div></div>
+    <div class="kpi violet"><div class="k">Paper trades</div><div class="v">${n}</div><div class="s">${n ? `${w} won · ${Math.round(100 * w / n)}%` : "none closed yet"}</div></div>
+    <div class="kpi ${open.length ? "blue" : "teal"}"><div class="k">Open positions</div><div class="v">${open.length}</div><div class="s">${open.length ? open.map((i) => `${i.sym} ${i.position.side}`).join(" · ") : (pend.length ? `${pend.map((i) => i.sym + " " + i.pending.side).join(" · ")} at next open` : "all flat")}</div></div>
+    <div class="kpi ${sig.length ? "good" : "warn"}"><div class="k">Breakouts on latest bar</div><div class="v ${sig.length ? "good" : "warn"}">${sig.length}</div><div class="s">${sig.length ? sig.map((i) => i.sym).join(" · ") : "none of " + all.length}</div></div>
+    <div class="kpi ${bad ? "bad" : "good"}"><div class="k">Engine</div><div class="v" style="font-size:1.05rem;line-height:1.9;">${st}</div><div class="s">${esc(R.engine_status)} · ${new Date(R.last_tick).toLocaleTimeString("en-IN")}</div></div>
+    <div class="kpi teal"><div class="k">Backtest reference</div><div class="v">${btN} <span class="muted" style="font-size:1rem;font-weight:600;">trades</span></div><div class="s">all ${all.length} instruments, 2014 to paper start</div></div>`;
+}
+
+function overview(R, sel) {
+  const row = (i) => {
+    if (!i.checks_long) return `<tr data-s="${esc(i.sym)}" class="${i.sym === sel ? "sel" : ""}"><td><b>${esc(i.sym)}</b></td><td colspan="8" class="neg">${esc(i.engine_status)} — ${esc(i.last_error || "")}</td></tr>`;
+    const L = i.checks_long.filter(([, o]) => o).length, S = i.checks_short.filter(([, o]) => o).length, b = i.backtest;
+    const state = i.position ? `<span class="side-pill ${i.position.side}">${i.position.side}</span> d${i.position.days}` : i.pending ? `<span class="side-pill ${i.pending.side}">${i.pending.side}</span> next open` : `<span class="muted">flat</span>`;
+    return `<tr data-s="${esc(i.sym)}" class="${i.sym === sel ? "sel" : ""}">
+      <td><b>${esc(i.sym)}</b><span class="kind">${i.kind === "index" ? "INDEX" : "IT"}</span>${i.engine_status !== "running" ? ' <span class="neg">⚠</span>' : ""}</td>
+      <td>${n2(i.ltp)}</td>
+      <td class="${i.range.width_atr <= R.rules.W ? "w-ok" : "w-bad"}">${i.range.width_atr.toFixed(2)}×</td>
+      <td><span class="score ${L === 5 ? "full long" : ""}">${L}/5</span></td><td><span class="score ${S === 5 ? "full short" : ""}">${S}/5</span></td>
+      <td>${state}</td>
+      <td class="${i.totals.rs >= 0 ? "pos" : "neg"}">${i.totals.n ? rs(i.totals.rs) : '<span class="muted">—</span>'}</td>
+      <td>${b && b.n ? `${b.n} · ${b.win}% · <span class="${b.mean_pct >= 0 ? "pos" : "neg"}">${b.mean_pct >= 0 ? "+" : ""}${b.mean_pct.toFixed(2)}%</span>` : "—"}</td>
+      <td class="muted">${day(i.paper_start)}</td></tr>`;
+  };
+  $("overview").innerHTML = `<h3>Instruments · click one for its range, checklist and trades</h3><div class="tbl"><table class="ov">
+    <thead><tr><th>Instrument</th><th>LTP</th><th>Range width</th><th>Long</th><th>Short</th><th>Paper</th><th>Paper ₹</th><th>Backtest n · win · net/trade</th><th>Paper since</th></tr></thead>
+    <tbody>${R.order.map((k) => R.instruments[k]).filter(Boolean).map(row).join("")}</tbody></table></div>
+    <div class="note">Range width must be ≤ ${R.rules.W}× ATR (green) before a breakout counts. Long/Short = how many of the 5 entry conditions the latest bar meets.
+      Backtest: BANKNIFTY and several IT stocks were net-negative before paper trading began. Watch them, don't trust them.</div>`;
 }
 
 function decision(s) {
   const el = $("decision"), p = s.position, q = s.pending;
   const card = (cls, glyph, label, action, meta) => `<div class="decision ${cls}"><div class="glyph">${glyph}</div><div><div class="mi-label">${label}</div><div class="mi-action">${action}</div><div class="mi-meta">${meta}</div></div></div>`;
   if (s.engine_status !== "running") { el.innerHTML = card("ERR", "!", "Engine", s.engine_status.replace("_", " ").toUpperCase(), esc(s.last_error || "")); return; }
-  if (p) { el.innerHTML = card(p.side, p.side === "LONG" ? "▲" : "▼", `Paper position since ${day(p.entry)}`, `${p.side} @ ${n2(p.entry_px)}`, `Stop ${n2(p.stop)} · target ${n2(p.target)} · day ${p.days} of ${s.rules.hold} · NIFTY ${n2(s.ltp)}`); return; }
+  if (p) { el.innerHTML = card(p.side, p.side === "LONG" ? "▲" : "▼", `Paper position since ${day(p.entry)}`, `${p.side} @ ${n2(p.entry_px)}`, `Stop ${n2(p.stop)} · target ${n2(p.target)} · day ${p.days} of ${s.rules.hold} · ${esc(s.sym)} ${n2(s.ltp)}`); return; }
   if (q) { el.innerHTML = card(q.side, q.side === "LONG" ? "▲" : "▼", `Signal on ${day(q.signal)} close`, `${q.side} AT NEXT OPEN`, `Range ${n2(q.lo)}–${n2(q.hi)} · stop ${n2(q.stop)} · target ${n2(q.target)}`); return; }
   el.innerHTML = card("WAIT", "…", "No position", "WAITING FOR BREAKOUT", s.bar.complete ? `Nothing to do on ${day(s.bar.date)}. Next check at the close of the next session.` : `Today's bar is still forming — the signal is decided on the close.`);
 }
@@ -249,8 +285,8 @@ function ladder(s) {
       <div class="spot" style="left:${pos(ltp)}%">${n2(ltp)}</div>
     </div>
     <div class="lvl-grid">
-      ${lvl("Range high", r.hi, "var(--good)", gap(r.hi) + " NIFTY")}
-      ${lvl("Range low", r.lo, "var(--critical)", gap(r.lo) + " NIFTY")}
+      ${lvl("Range high", r.hi, "var(--good)", gap(r.hi) + " " + s.sym)}
+      ${lvl("Range low", r.lo, "var(--critical)", gap(r.lo) + " " + s.sym)}
       ${lvl("Midpoint = stop", r.mid, "var(--warning)", `height ${n2(r.height)} pts`)}
       ${lvl("Long target", r.target_long, "var(--long)", gap(r.target_long))}
       ${lvl("Short target", r.target_short, "var(--short)", gap(r.target_short))}
@@ -269,7 +305,7 @@ function chart(s) {
   const path = (k) => h.map((d, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(d[k]).toFixed(1)}`).join(" ");
   const ticks = [mn, (mn + mx) / 2, mx].map((v) => `<text x="${L - 6}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="var(--text-muted)">${Math.round(v)}</text><line x1="${L}" x2="${W - P}" y1="${y(v)}" y2="${y(v)}" stroke="var(--gridline)"/>`).join("");
   const last = h[h.length - 1];
-  $("chart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="NIFTY close with rolling 10-day range">
+  $("chart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Close with rolling 10-day range">
     ${ticks}
     <path d="${path("hi")}" fill="none" stroke="var(--good)" stroke-width="1.6" stroke-dasharray="5 3"/>
     <path d="${path("lo")}" fill="none" stroke="var(--critical)" stroke-width="1.6" stroke-dasharray="5 3"/>
@@ -292,7 +328,7 @@ function checks(s) {
     <div class="note">Volume vs breakout requirement: <b>${(v.today / 1e6).toFixed(0)}M</b> of <b>${(v.needed / 1e6).toFixed(0)}M</b> (${Math.round(pct)}%)</div>
     <div class="meter"><i style="width:${pct}%"></i></div>
     ${s.position ? `<div class="note">A position is open, so new signals are ignored until it closes (same as the backtest).</div>` : ""}
-    <div class="note">Volume is the NIFTY constituents' traded volume from Dhan. Until Dhan publishes the daily bar, it is summed from 1-minute data, which runs about 4 % low.</div>`;
+    <div class="note">${s.kind === "index" ? "Index volume is the constituents' traded volume from Dhan." : "Volume is the stock's NSE cash volume."} Until Dhan publishes the daily bar, it is summed from 1-minute data, which runs about 4 % low.</div>`;
 }
 
 function position(s) {
@@ -320,7 +356,7 @@ function trades(s) {
     <td>${n2(t.entry_px)}</td><td>${n2(t.exit_px)}</td><td>${t.days}</td><td><span class="reason">${t.reason}</span></td>
     <td class="${t.pts >= 0 ? "pos" : "neg"}">${pts(t.pts)}</td><td class="${t.rs >= 0 ? "pos" : "neg"}">${rs(t.rs)}</td></tr>`).join("");
   $("trades").innerHTML = `<h3>Paper trades</h3><div class="tbl"><table><thead><tr><th>Entry</th><th>Exit</th><th>Side</th><th>Entry px</th><th>Exit px</th><th>Days</th><th>Why</th><th>Points</th><th>₹ / lot net</th></tr></thead>
-    <tbody>${rows || `<tr class="empty-row"><td colspan="9">No closed paper trades yet. Started ${day(s.paper_start)}. The backtest averaged about 1.7 trades a year, so expect long quiet stretches.</td></tr>`}</tbody></table></div>`;
+    <tbody>${rows || `<tr class="empty-row"><td colspan="9">No closed paper trades yet. Started ${day(s.paper_start)}. The backtest averaged about ${(s.backtest.n / 12.75).toFixed(1)} trades a year, so expect long quiet stretches.</td></tr>`}</tbody></table></div>`;
 }
 
 function backtest(s) {
@@ -335,27 +371,48 @@ function backtest(s) {
   $("backtest").innerHTML = `<h3>Backtest reference · same rules, ${day(b.from)} – ${day(b.to)}</h3>
     <div class="tiles"><div class="tile"><div class="v">${b.n}</div><div class="k">Trades · ${b.win}% win</div></div>
       <div class="tile"><div class="v good">${b.mean_pct.toFixed(2)}%</div><div class="k">Net per trade · PF ${b.pf ?? "—"}</div></div>
-      <div class="tile"><div class="v ${b.rs >= 0 ? "good" : "bad"}">${rs(b.rs)}</div><div class="k">₹ / lot, at today's lot 65</div></div></div>
+      <div class="tile"><div class="v ${b.rs >= 0 ? "good" : "bad"}">${rs(b.rs)}</div><div class="k">₹ / lot, at today's lot ${s.lot}</div></div></div>
     <div class="chart" style="margin-top:0.7rem;"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="height:5.5rem" role="img" aria-label="Backtest equity, rupees per lot">
       <line x1="${P}" x2="${W - P}" y1="${y(0)}" y2="${y(0)}" stroke="var(--gridline)" stroke-dasharray="4 4"/>
       <path d="${line}" fill="none" stroke="var(--good)" stroke-width="2.4" stroke-linejoin="round"/></svg></div>
-    <div class="note">Caveats: 21 trades in 11+ years is a small sample. The same rules lost on BANKNIFTY and on BAJFINANCE. This paper run is the out-of-sample test.</div>
+    <div class="note">Caveats: ${b.n} trades in 12+ years is a small sample, and these rules were found on NIFTY. Across all 210 F&amp;O stocks they lost money (see the F&amp;O universe page). This paper run is the out-of-sample test.</div>
     <details class="bt"><summary>All ${b.n} backtest trades</summary><div class="tbl"><table><thead><tr><th>Entry</th><th>Exit</th><th>Side</th><th>Entry px</th><th>Exit px</th><th>Days</th><th>Net %</th><th>₹ / lot</th></tr></thead><tbody>${rows}</tbody></table></div></details>`;
 }
 
+let SEL = (() => { try { return decodeURIComponent(location.hash.slice(1)) || localStorage.getItem("rb-sel") || "NIFTY"; } catch (e) { return "NIFTY"; } })();
+let LAST = null;
+
+function render() {
+  const R = LAST;
+  if (!R.instruments[SEL]) SEL = R.order[0];
+  $("err").innerHTML = R.last_error ? `<div class="error-banner">${esc(R.last_error)}</div>` : "";
+  try { kpis(R); } catch (e) { console.error("kpis", e); }
+  try { overview(R, SEL); } catch (e) { console.error("overview", e); }
+  const i = R.instruments[SEL];
+  $("detail-title").innerHTML = `${esc(i.name || i.sym)} <small>${esc(i.sym)} · ${i.kind === "index" ? "index" : "NIFTY IT stock"} · lot ${i.lot ?? "—"} · paper since ${day(i.paper_start)}</small>`;
+  const s = { ...i, rules: { ...R.rules, lot: i.lot }, last_tick: R.last_tick };
+  if (!i.checks_long) { $("decision").innerHTML = `<div class="error-banner">${esc(i.engine_status)}: ${esc(i.last_error || "no data yet")}</div>`; return; }
+  for (const f of [decision, ladder, chart, checks, position, trades, backtest]) {
+    try { f(s); } catch (e) { console.error(f.name, e); }
+  }
+}
+
 async function refresh() {
-  let s;
   try {
     const r = await fetch("live_state.json?t=" + Date.now(), { cache: "no-store" });
     if (!r.ok) throw new Error("HTTP " + r.status);
-    s = await r.json();
+    LAST = await r.json();
   } catch (e) { $("err").innerHTML = `<div class="error-banner">Failed to load live_state.json — ${esc(e.message)}</div>`; return; }
-  $("err").innerHTML = s.last_error ? `<div class="error-banner">${esc(s.last_error)}</div>` : "";
-  for (const f of [kpis, decision, ladder, chart, checks, position, trades, backtest]) {
-    try { f(s); } catch (e) { console.error(f.name, e); }
-  }
+  render();
   $("clock").textContent = "Updated " + new Date().toLocaleTimeString("en-IN") + " · refreshes every 60s";
 }
+$("overview").addEventListener("click", (e) => {
+  const tr = e.target.closest("tr[data-s]"); if (!tr || !LAST) return;
+  SEL = tr.dataset.s;
+  try { localStorage.setItem("rb-sel", SEL); history.replaceState(null, "", "#" + SEL); } catch (err) {}
+  render();
+  $("detail-title").scrollIntoView({ behavior: "smooth", block: "start" });
+});
 refresh();
 setInterval(refresh, 60000);
 </script>
