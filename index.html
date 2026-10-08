@@ -370,7 +370,7 @@ function backtest(s) {
     <td>${n2(t.entry_px)}</td><td>${n2(t.exit_px)}</td><td>${t.days}</td><td class="${t.net_pct >= 0 ? "pos" : "neg"}">${t.net_pct.toFixed(2)}%</td><td class="${t.rs >= 0 ? "pos" : "neg"}">${rs(t.rs)}</td></tr>`).join("");
   $("backtest").innerHTML = `<h3>Backtest reference · same rules, ${day(b.from)} – ${day(b.to)}</h3>
     <div class="tiles"><div class="tile"><div class="v">${b.n}</div><div class="k">Trades · ${b.win}% win</div></div>
-      <div class="tile"><div class="v good">${b.mean_pct.toFixed(2)}%</div><div class="k">Net per trade · PF ${b.pf ?? "—"}</div></div>
+      <div class="tile"><div class="v ${(b.mean_pct ?? 0) >= 0 ? "good" : "bad"}">${b.mean_pct == null ? "—" : (b.mean_pct >= 0 ? "+" : "") + b.mean_pct.toFixed(2) + "%"}</div><div class="k">Net per trade · PF ${b.pf ?? "—"}</div></div>
       <div class="tile"><div class="v ${b.rs >= 0 ? "good" : "bad"}">${rs(b.rs)}</div><div class="k">₹ / lot, at today's lot ${s.lot}</div></div></div>
     <div class="chart" style="margin-top:0.7rem;"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="height:5.5rem" role="img" aria-label="Backtest equity, rupees per lot">
       <line x1="${P}" x2="${W - P}" y1="${y(0)}" y2="${y(0)}" stroke="var(--gridline)" stroke-dasharray="4 4"/>
