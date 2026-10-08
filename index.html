@@ -168,8 +168,8 @@
     <div class="brand">
       <div class="logo">▭</div>
       <div>
-        <h1>Range Breakout · Indices + NIFTY IT</h1>
-        <div class="tag">Multi-day range breakout &middot; daily bars &middot; NIFTY, SENSEX, BANKNIFTY + 10 NIFTY IT stocks &middot; 1 futures lot each</div>
+        <h1>Range Breakout · NIFTY + SENSEX</h1>
+        <div class="tag">Multi-day range breakout &middot; daily bars &middot; NIFTY + SENSEX &middot; 1 futures lot each</div>
       </div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
@@ -183,7 +183,7 @@
     <p>Range = high/low of the 10 days before today, no wider than 4 × ATR20, with average volume below the 20 days before it.
       LONG when today closes above the range high in an uptrend (close &gt; SMA50, SMA50 rising) on volume &ge; 1.5 × the range average; SHORT is the mirror.
       Enter at the next day's open. Stop = range midpoint, target = range high + range height (short: low &minus; height), otherwise exit at the close of day 20.
-      One position at a time per instrument. P&amp;L per 1 futures lot (NIFTY 65, SENSEX 20, BANKNIFTY 30, stocks at their F&amp;O lot) after 0.05 %/side costs. Stocks skip signals for a month after a suspected split. No orders are placed.</p>
+      One position at a time per instrument. P&amp;L per 1 futures lot (NIFTY 65, SENSEX 20) after 0.05 %/side costs. No orders are placed.</p>
   </details>
 </header>
 
@@ -256,7 +256,7 @@ function overview(R, sel) {
     <thead><tr><th>Instrument</th><th>LTP</th><th>Range width</th><th>Long</th><th>Short</th><th>Paper</th><th>Paper ₹</th><th>Backtest n · win · net/trade</th><th>Paper since</th></tr></thead>
     <tbody>${R.order.map((k) => R.instruments[k]).filter(Boolean).map(row).join("")}</tbody></table></div>
     <div class="note">Range width must be ≤ ${R.rules.W}× ATR (green) before a breakout counts. Long/Short = how many of the 5 entry conditions the latest bar meets.
-      Backtest: BANKNIFTY and several IT stocks were net-negative before paper trading began. Watch them, don't trust them.</div>`;
+      Only NIFTY has real backtest support; SENSEX moves almost in step with it, so treat it as confirmation, not a second edge.</div>`;
 }
 
 function decision(s) {
