@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-10-08T15:51:12.858046+05:30",
+ "last_tick": "2026-10-09T08:48:32.867545+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -18,8 +18,8 @@
    "kind": "index",
    "lot": 65,
    "paper_start": "2026-10-05",
-   "engine_status": "running",
-   "last_error": null,
+   "engine_status": "token_invalid",
+   "last_error": "daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user generated access token is invalid or expired.'}",
    "bar": {
     "date": "2026-10-07",
     "complete": true,
@@ -715,8 +715,8 @@
    "kind": "index",
    "lot": 20,
    "paper_start": "2026-10-08",
-   "engine_status": "running",
-   "last_error": null,
+   "engine_status": "token_invalid",
+   "last_error": "daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user generated access token is invalid or expired.'}",
    "bar": {
     "date": "2026-10-08",
     "complete": true,
@@ -1418,6 +1418,6 @@
    }
   }
  },
- "engine_status": "running",
- "last_error": null
+ "engine_status": "token_invalid",
+ "last_error": "NIFTY: daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user; SENSEX: daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user"
 }
