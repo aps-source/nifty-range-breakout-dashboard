@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-10-13T09:13:17.198005+05:30",
+ "last_tick": "2026-10-13T09:23:22.488433+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -21,68 +21,68 @@
    "engine_status": "running",
    "last_error": null,
    "bar": {
-    "date": "2026-10-12",
-    "complete": true,
-    "open": 22593.2,
-    "high": 22651.1,
-    "low": 22304.45,
-    "close": 22363.35,
-    "volume": 258785417.0,
-    "sma50": 23687.39
+    "date": "2026-10-13",
+    "complete": false,
+    "open": 22364.15,
+    "high": 22460.8,
+    "low": 22288.45,
+    "close": 22451.7,
+    "volume": 20720028.0,
+    "sma50": 23648.76
    },
-   "ltp": 22363.35,
+   "ltp": 22451.7,
    "split_guard": false,
    "range": {
-    "hi": 23162.7,
+    "hi": 23080.25,
     "lo": 22179.9,
-    "mid": 22671.3,
-    "height": 982.8,
-    "atr": 197.49,
-    "width_atr": 4.98,
-    "target_long": 24145.5,
-    "target_short": 21197.1,
-    "from": "2026-09-25",
-    "to": "2026-10-09"
+    "mid": 22630.08,
+    "height": 900.35,
+    "atr": 194.25,
+    "width_atr": 4.64,
+    "target_long": 23980.6,
+    "target_short": 21279.55,
+    "from": "2026-09-28",
+    "to": "2026-10-12"
    },
    "volume": {
-    "today": 258785417.0,
-    "range_avg": 368221086.2,
-    "prior_avg": 299592344.3,
-    "needed": 552331629.3
+    "today": 20720028.0,
+    "range_avg": 369827556.8,
+    "prior_avg": 295557397.5,
+    "needed": 554741335.2
    },
    "checks_long": [
     [
-     "Range tight: 983 pts = 4.98\u00d7 ATR (max 4\u00d7)",
+     "Range tight: 900 pts = 4.64\u00d7 ATR (max 4\u00d7)",
      false
     ],
     [
-     "Quiet range volume: avg 368M < prior 20-day 300M",
+     "Quiet range volume: avg 370M < prior 20-day 296M",
      false
     ],
     [
-     "Uptrend: close > SMA50 23,687 and SMA50 rising",
+     "Uptrend: close > SMA50 23,649 and SMA50 rising",
      false
     ],
     [
-     "Close above range high 23,162.70",
+     "Close above range high 23,080.25",
      false
     ],
     [
-     "Volume 259M \u2265 1.5\u00d7 range avg = 552M",
+     "Volume 21M \u2265 1.5\u00d7 range avg = 555M",
      false
     ]
    ],
    "checks_short": [
     [
-     "Range tight: 983 pts = 4.98\u00d7 ATR (max 4\u00d7)",
+     "Range tight: 900 pts = 4.64\u00d7 ATR (max 4\u00d7)",
      false
     ],
     [
-     "Quiet range volume: avg 368M < prior 20-day 300M",
+     "Quiet range volume: avg 370M < prior 20-day 296M",
      false
     ],
     [
-     "Downtrend: close < SMA50 23,687 and SMA50 falling",
+     "Downtrend: close < SMA50 23,649 and SMA50 falling",
      true
     ],
     [
@@ -90,7 +90,7 @@
      false
     ],
     [
-     "Volume 259M \u2265 1.5\u00d7 range avg = 552M",
+     "Volume 21M \u2265 1.5\u00d7 range avg = 555M",
      false
     ]
    ],
@@ -104,12 +104,6 @@
     "rs": 0
    },
    "history": [
-    {
-     "date": "2026-07-17",
-     "close": 24334.3,
-     "hi": 24530.9,
-     "lo": 23805.2
-    },
     {
      "date": "2026-07-20",
      "close": 24238.5,
@@ -463,6 +457,12 @@
      "close": 22363.35,
      "hi": 23162.7,
      "lo": 22179.9
+    },
+    {
+     "date": "2026-10-13",
+     "close": 22451.7,
+     "hi": 23080.25,
+     "lo": 22179.9
     }
    ],
    "backtest": {
@@ -718,68 +718,68 @@
    "engine_status": "running",
    "last_error": null,
    "bar": {
-    "date": "2026-10-12",
-    "complete": true,
-    "open": 72771.32,
-    "high": 72884.25,
-    "low": 71676.1,
-    "close": 71924.68,
-    "volume": 12742292.0,
-    "sma50": 75746.19
+    "date": "2026-10-13",
+    "complete": false,
+    "open": 71951.73,
+    "high": 72238.96,
+    "low": 71703.56,
+    "close": 72232.19,
+    "volume": 2618717.0,
+    "sma50": 75628.94
    },
-   "ltp": 71924.68,
+   "ltp": 72232.19,
    "split_guard": false,
    "range": {
-    "hi": 73968.05,
+    "hi": 73740.85,
     "lo": 71292.88,
-    "mid": 72630.46,
-    "height": 2675.17,
-    "atr": 676.15,
-    "width_atr": 3.96,
-    "target_long": 76643.22,
-    "target_short": 68617.71,
-    "from": "2026-09-25",
-    "to": "2026-10-09"
+    "mid": 72516.87,
+    "height": 2447.97,
+    "atr": 662.6,
+    "width_atr": 3.69,
+    "target_long": 76188.82,
+    "target_short": 68844.91,
+    "from": "2026-09-28",
+    "to": "2026-10-12"
    },
    "volume": {
-    "today": 12742292.0,
-    "range_avg": 61513939.6,
-    "prior_avg": 15136418.45,
-    "needed": 92270909.4
+    "today": 2618717.0,
+    "range_avg": 59594525.2,
+    "prior_avg": 15614140.75,
+    "needed": 89391787.80000001
    },
    "checks_long": [
     [
-     "Range tight: 2,675 pts = 3.96\u00d7 ATR (max 4\u00d7)",
+     "Range tight: 2,448 pts = 3.69\u00d7 ATR (max 4\u00d7)",
      true
     ],
     [
-     "Quiet range volume: avg 62M < prior 20-day 15M",
+     "Quiet range volume: avg 60M < prior 20-day 16M",
      false
     ],
     [
-     "Uptrend: close > SMA50 75,746 and SMA50 rising",
+     "Uptrend: close > SMA50 75,629 and SMA50 rising",
      false
     ],
     [
-     "Close above range high 73,968.05",
+     "Close above range high 73,740.85",
      false
     ],
     [
-     "Volume 13M \u2265 1.5\u00d7 range avg = 92M",
+     "Volume 2.62M \u2265 1.5\u00d7 range avg = 89M",
      false
     ]
    ],
    "checks_short": [
     [
-     "Range tight: 2,675 pts = 3.96\u00d7 ATR (max 4\u00d7)",
+     "Range tight: 2,448 pts = 3.69\u00d7 ATR (max 4\u00d7)",
      true
     ],
     [
-     "Quiet range volume: avg 62M < prior 20-day 15M",
+     "Quiet range volume: avg 60M < prior 20-day 16M",
      false
     ],
     [
-     "Downtrend: close < SMA50 75,746 and SMA50 falling",
+     "Downtrend: close < SMA50 75,629 and SMA50 falling",
      true
     ],
     [
@@ -787,7 +787,7 @@
      false
     ],
     [
-     "Volume 13M \u2265 1.5\u00d7 range avg = 92M",
+     "Volume 2.62M \u2265 1.5\u00d7 range avg = 89M",
      false
     ]
    ],
@@ -801,12 +801,6 @@
     "rs": 0
    },
    "history": [
-    {
-     "date": "2026-07-17",
-     "close": 78151.45,
-     "hi": 78664.92,
-     "lo": 76259.03
-    },
     {
      "date": "2026-07-20",
      "close": 77708.52,
@@ -1159,6 +1153,12 @@
      "date": "2026-10-12",
      "close": 71924.68,
      "hi": 73968.05,
+     "lo": 71292.88
+    },
+    {
+     "date": "2026-10-13",
+     "close": 72232.19,
+     "hi": 73740.85,
      "lo": 71292.88
     }
    ],
