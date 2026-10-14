@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-10-14T12:19:25.413273+05:30",
+ "last_tick": "2026-10-14T12:25:32.861305+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -26,11 +26,11 @@
     "open": 22715.75,
     "high": 22757.95,
     "low": 22655.35,
-    "close": 22736.4,
-    "volume": 154641173.0,
-    "sma50": 23613.4
+    "close": 22726.0,
+    "volume": 159013258.0,
+    "sma50": 23613.19
    },
-   "ltp": 22736.4,
+   "ltp": 22726.0,
    "split_guard": false,
    "range": {
     "hi": 22809.35,
@@ -45,7 +45,7 @@
     "to": "2026-10-13"
    },
    "volume": {
-    "today": 154641173.0,
+    "today": 159013258.0,
     "range_avg": 374569975.9,
     "prior_avg": 293823853.1,
     "needed": 561854963.8499999
@@ -68,7 +68,7 @@
      false
     ],
     [
-     "Volume 155M \u2265 1.5\u00d7 range avg = 562M",
+     "Volume 159M \u2265 1.5\u00d7 range avg = 562M",
      false
     ]
    ],
@@ -90,7 +90,7 @@
      false
     ],
     [
-     "Volume 155M \u2265 1.5\u00d7 range avg = 562M",
+     "Volume 159M \u2265 1.5\u00d7 range avg = 562M",
      false
     ]
    ],
@@ -460,7 +460,7 @@
     },
     {
      "date": "2026-10-14",
-     "close": 22736.4,
+     "close": 22726.0,
      "hi": 22809.35,
      "lo": 22179.9
     }
@@ -723,11 +723,11 @@
     "open": 73047.72,
     "high": 73195.26,
     "low": 72888.72,
-    "close": 73146.0,
-    "volume": 6735677.0,
-    "sma50": 75535.11
+    "close": 73112.87,
+    "volume": 7116761.0,
+    "sma50": 75534.45
    },
-   "ltp": 73146.0,
+   "ltp": 73112.87,
    "split_guard": false,
    "range": {
     "hi": 73067.81,
@@ -742,7 +742,7 @@
     "to": "2026-10-13"
    },
    "volume": {
-    "today": 6735677.0,
+    "today": 7116761.0,
     "range_avg": 60644079.0,
     "prior_avg": 15609680.7,
     "needed": 90966118.5
@@ -757,7 +757,7 @@
      false
     ],
     [
-     "Uptrend: close > SMA50 75,535 and SMA50 rising",
+     "Uptrend: close > SMA50 75,534 and SMA50 rising",
      false
     ],
     [
@@ -765,7 +765,7 @@
      true
     ],
     [
-     "Volume 6.74M \u2265 1.5\u00d7 range avg = 91M",
+     "Volume 7.12M \u2265 1.5\u00d7 range avg = 91M",
      false
     ]
    ],
@@ -779,7 +779,7 @@
      false
     ],
     [
-     "Downtrend: close < SMA50 75,535 and SMA50 falling",
+     "Downtrend: close < SMA50 75,534 and SMA50 falling",
      true
     ],
     [
@@ -787,7 +787,7 @@
      false
     ],
     [
-     "Volume 6.74M \u2265 1.5\u00d7 range avg = 91M",
+     "Volume 7.12M \u2265 1.5\u00d7 range avg = 91M",
      false
     ]
    ],
@@ -1157,7 +1157,7 @@
     },
     {
      "date": "2026-10-14",
-     "close": 73146.0,
+     "close": 73112.87,
      "hi": 73067.81,
      "lo": 71292.88
     }
