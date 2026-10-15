@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-10-15T12:55:26.875854+05:30",
+ "last_tick": "2026-10-15T12:57:29.527960+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -19,7 +19,7 @@
    "lot": 65,
    "paper_start": "2026-10-05",
    "engine_status": "data_error",
-   "last_error": "daily fetch failed: HTTPSConnectionPool(host='api.dhan.co', port=443): Max retries exceeded with url: /v2/charts/historical (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x000002910C214F50>: Failed to resolve 'api.dhan.co' ([Errno 11001] getaddrinfo failed)\"))",
+   "last_error": "daily fetch failed: HTTPSConnectionPool(host='api.dhan.co', port=443): Max retries exceeded with url: /v2/charts/historical (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x000002910C214410>: Failed to resolve 'api.dhan.co' ([Errno 11001] getaddrinfo failed)\"))",
    "bar": {
     "date": "2026-10-14",
     "complete": true,
@@ -716,7 +716,7 @@
    "lot": 20,
    "paper_start": "2026-10-08",
    "engine_status": "data_error",
-   "last_error": "daily fetch failed: HTTPSConnectionPool(host='api.dhan.co', port=443): Max retries exceeded with url: /v2/charts/historical (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x000002910C214E10>: Failed to resolve 'api.dhan.co' ([Errno 11001] getaddrinfo failed)\"))",
+   "last_error": "daily fetch failed: HTTPSConnectionPool(host='api.dhan.co', port=443): Max retries exceeded with url: /v2/charts/historical (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x000002910C2142D0>: Failed to resolve 'api.dhan.co' ([Errno 11001] getaddrinfo failed)\"))",
    "bar": {
     "date": "2026-10-14",
     "complete": true,
