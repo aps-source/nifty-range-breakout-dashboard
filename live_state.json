@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-10-17T22:09:13.748243+05:30",
+ "last_tick": "2026-10-19T09:09:28.257628+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -18,8 +18,8 @@
    "kind": "index",
    "lot": 65,
    "paper_start": "2026-10-05",
-   "engine_status": "token_invalid",
-   "last_error": "daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user generated access token is invalid or expired.'}",
+   "engine_status": "running",
+   "last_error": null,
    "bar": {
     "date": "2026-10-16",
     "complete": true,
@@ -27,7 +27,7 @@
     "high": 23149.85,
     "low": 22913.8,
     "close": 23146.15,
-    "volume": 377280081.0,
+    "volume": 391557143.0,
     "sma50": 23549.21
    },
    "ltp": 23146.15,
@@ -45,7 +45,7 @@
     "to": "2026-10-15"
    },
    "volume": {
-    "today": 377280081.0,
+    "today": 391557143.0,
     "range_avg": 347711939.8,
     "prior_avg": 290199801.75,
     "needed": 521567909.70000005
@@ -68,7 +68,7 @@
      true
     ],
     [
-     "Volume 377M \u2265 1.5\u00d7 range avg = 522M",
+     "Volume 392M \u2265 1.5\u00d7 range avg = 522M",
      false
     ]
    ],
@@ -90,7 +90,7 @@
      false
     ],
     [
-     "Volume 377M \u2265 1.5\u00d7 range avg = 522M",
+     "Volume 392M \u2265 1.5\u00d7 range avg = 522M",
      false
     ]
    ],
@@ -715,8 +715,8 @@
    "kind": "index",
    "lot": 20,
    "paper_start": "2026-10-08",
-   "engine_status": "token_invalid",
-   "last_error": "daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user generated access token is invalid or expired.'}",
+   "engine_status": "running",
+   "last_error": null,
    "bar": {
     "date": "2026-10-16",
     "complete": true,
@@ -724,7 +724,7 @@
     "high": 74778.78,
     "low": 74012.99,
     "close": 74729.27,
-    "volume": 22527838.0,
+    "volume": 22022462.0,
     "sma50": 75368.53
    },
    "ltp": 74729.27,
@@ -742,7 +742,7 @@
     "to": "2026-10-15"
    },
    "volume": {
-    "today": 22527838.0,
+    "today": 22022462.0,
     "range_avg": 61833788.5,
     "prior_avg": 15490391.45,
     "needed": 92750682.75
@@ -765,7 +765,7 @@
      true
     ],
     [
-     "Volume 23M \u2265 1.5\u00d7 range avg = 93M",
+     "Volume 22M \u2265 1.5\u00d7 range avg = 93M",
      false
     ]
    ],
@@ -787,7 +787,7 @@
      false
     ],
     [
-     "Volume 23M \u2265 1.5\u00d7 range avg = 93M",
+     "Volume 22M \u2265 1.5\u00d7 range avg = 93M",
      false
     ]
    ],
@@ -1418,6 +1418,6 @@
    }
   }
  },
- "engine_status": "token_invalid",
- "last_error": "NIFTY: daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user; SENSEX: daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user"
+ "engine_status": "running",
+ "last_error": null
 }
