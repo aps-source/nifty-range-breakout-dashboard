@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-10-21T08:50:29.448906+05:30",
+ "last_tick": "2026-10-21T09:00:50.575930+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -715,8 +715,8 @@
    "kind": "index",
    "lot": 20,
    "paper_start": "2026-10-08",
-   "engine_status": "data_error",
-   "last_error": "daily fetch failed: {'error_code': 'DH-904', 'error_type': 'Rate_Limit', 'error_message': 'Too many requests on server from single user breaching rate limits. Try throttling API calls.'}",
+   "engine_status": "running",
+   "last_error": null,
    "bar": {
     "date": "2026-10-19",
     "complete": true,
@@ -724,7 +724,7 @@
     "high": 74849.75,
     "low": 73708.54,
     "close": 73852.9,
-    "volume": 14804330.0,
+    "volume": 14760896.0,
     "sma50": 75266.49
    },
    "ltp": 73852.9,
@@ -742,7 +742,7 @@
     "to": "2026-10-16"
    },
    "volume": {
-    "today": 14804330.0,
+    "today": 14760896.0,
     "range_avg": 59776447.4,
     "prior_avg": 16992388.7,
     "needed": 89664671.1
@@ -1418,6 +1418,6 @@
    }
   }
  },
- "engine_status": "partial",
- "last_error": "SENSEX: daily fetch failed: {'error_code': 'DH-904', 'error_type': 'Rate_Limit', 'error_message': 'Too many requests on server f"
+ "engine_status": "running",
+ "last_error": null
 }
