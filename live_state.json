@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-10-19T15:35:34.721526+05:30",
+ "last_tick": "2026-10-21T08:50:29.448906+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -27,7 +27,7 @@
     "high": 23175.25,
     "low": 22845.0,
     "close": 22888.95,
-    "volume": 273729464.0,
+    "volume": 285859145.0,
     "sma50": 23514.27
    },
    "ltp": 22888.95,
@@ -45,7 +45,7 @@
     "to": "2026-10-16"
    },
    "volume": {
-    "today": 273729464.0,
+    "today": 285859145.0,
     "range_avg": 341737349.2,
     "prior_avg": 296820862.9,
     "needed": 512606023.79999995
@@ -68,7 +68,7 @@
      false
     ],
     [
-     "Volume 274M \u2265 1.5\u00d7 range avg = 513M",
+     "Volume 286M \u2265 1.5\u00d7 range avg = 513M",
      false
     ]
    ],
@@ -90,7 +90,7 @@
      false
     ],
     [
-     "Volume 274M \u2265 1.5\u00d7 range avg = 513M",
+     "Volume 286M \u2265 1.5\u00d7 range avg = 513M",
      false
     ]
    ],
@@ -715,8 +715,8 @@
    "kind": "index",
    "lot": 20,
    "paper_start": "2026-10-08",
-   "engine_status": "running",
-   "last_error": null,
+   "engine_status": "data_error",
+   "last_error": "daily fetch failed: {'error_code': 'DH-904', 'error_type': 'Rate_Limit', 'error_message': 'Too many requests on server from single user breaching rate limits. Try throttling API calls.'}",
    "bar": {
     "date": "2026-10-19",
     "complete": true,
@@ -1418,6 +1418,6 @@
    }
   }
  },
- "engine_status": "running",
- "last_error": null
+ "engine_status": "partial",
+ "last_error": "SENSEX: daily fetch failed: {'error_code': 'DH-904', 'error_type': 'Rate_Limit', 'error_message': 'Too many requests on server f"
 }
