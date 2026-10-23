@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-10-23T08:35:20.153380+05:30",
+ "last_tick": "2026-10-23T08:45:49.296698+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -715,8 +715,8 @@
    "kind": "index",
    "lot": 20,
    "paper_start": "2026-10-08",
-   "engine_status": "data_error",
-   "last_error": "daily fetch failed: {'error_code': 'DH-905', 'error_type': 'Input_Exception', 'error_message': 'Missing required fields, bad values for parameters etc.'}",
+   "engine_status": "running",
+   "last_error": null,
    "bar": {
     "date": "2026-10-22",
     "complete": true,
@@ -724,7 +724,7 @@
     "high": 73720.83,
     "low": 73005.11,
     "close": 73249.39,
-    "volume": 16068023.0,
+    "volume": 24445296.0,
     "sma50": 75064.84
    },
    "ltp": 73249.39,
@@ -742,7 +742,7 @@
     "to": "2026-10-21"
    },
    "volume": {
-    "today": 16068023.0,
+    "today": 24445296.0,
     "range_avg": 56039505.7,
     "prior_avg": 19163129.25,
     "needed": 84059258.55000001
@@ -765,7 +765,7 @@
      false
     ],
     [
-     "Volume 16M \u2265 1.5\u00d7 range avg = 84M",
+     "Volume 24M \u2265 1.5\u00d7 range avg = 84M",
      false
     ]
    ],
@@ -787,7 +787,7 @@
      false
     ],
     [
-     "Volume 16M \u2265 1.5\u00d7 range avg = 84M",
+     "Volume 24M \u2265 1.5\u00d7 range avg = 84M",
      false
     ]
    ],
@@ -1418,6 +1418,6 @@
    }
   }
  },
- "engine_status": "partial",
- "last_error": "SENSEX: daily fetch failed: {'error_code': 'DH-905', 'error_type': 'Input_Exception', 'error_message': 'Missing required fields,"
+ "engine_status": "running",
+ "last_error": null
 }
