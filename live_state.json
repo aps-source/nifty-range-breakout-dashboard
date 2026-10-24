@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-10-24T15:10:54.733949+05:30",
+ "last_tick": "2026-10-24T15:21:17.486052+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -18,8 +18,8 @@
    "kind": "index",
    "lot": 65,
    "paper_start": "2026-10-05",
-   "engine_status": "data_error",
-   "last_error": "daily fetch failed: HTTPSConnectionPool(host='api.dhan.co', port=443): Max retries exceeded with url: /v2/charts/historical (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x000001EDBE37B250>: Failed to resolve 'api.dhan.co' ([Errno 11001] getaddrinfo failed)\"))",
+   "engine_status": "token_invalid",
+   "last_error": "daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user generated access token is invalid or expired.'}",
    "bar": {
     "date": "2026-10-23",
     "complete": true,
@@ -1418,6 +1418,6 @@
    }
   }
  },
- "engine_status": "data_error",
- "last_error": "NIFTY: daily fetch failed: HTTPSConnectionPool(host='api.dhan.co', port=443): Max retries exceeded with url: /v2/charts/histori; SENSEX: daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user"
+ "engine_status": "token_invalid",
+ "last_error": "NIFTY: daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user; SENSEX: daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user"
 }
