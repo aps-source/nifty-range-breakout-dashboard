@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-10-26T08:45:47.037030+05:30",
+ "last_tick": "2026-10-26T08:55:59.360189+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -715,8 +715,8 @@
    "kind": "index",
    "lot": 20,
    "paper_start": "2026-10-08",
-   "engine_status": "data_error",
-   "last_error": "daily fetch failed: {'error_code': 'DH-904', 'error_type': 'Rate_Limit', 'error_message': 'Too many requests on server from single user breaching rate limits. Try throttling API calls.'}",
+   "engine_status": "running",
+   "last_error": null,
    "bar": {
     "date": "2026-10-23",
     "complete": true,
@@ -724,7 +724,7 @@
     "high": 73766.51,
     "low": 72452.37,
     "close": 73123.83,
-    "volume": 19586690.0,
+    "volume": 19437212.0,
     "sma50": 74964.23
    },
    "ltp": 73123.83,
@@ -742,7 +742,7 @@
     "to": "2026-10-22"
    },
    "volume": {
-    "today": 19586690.0,
+    "today": 19437212.0,
     "range_avg": 56614427.5,
     "prior_avg": 19486927.1,
     "needed": 84921641.25
@@ -765,7 +765,7 @@
      false
     ],
     [
-     "Volume 20M \u2265 1.5\u00d7 range avg = 85M",
+     "Volume 19M \u2265 1.5\u00d7 range avg = 85M",
      false
     ]
    ],
@@ -787,7 +787,7 @@
      false
     ],
     [
-     "Volume 20M \u2265 1.5\u00d7 range avg = 85M",
+     "Volume 19M \u2265 1.5\u00d7 range avg = 85M",
      false
     ]
    ],
@@ -1418,6 +1418,6 @@
    }
   }
  },
- "engine_status": "partial",
- "last_error": "SENSEX: daily fetch failed: {'error_code': 'DH-904', 'error_type': 'Rate_Limit', 'error_message': 'Too many requests on server f"
+ "engine_status": "running",
+ "last_error": null
 }
