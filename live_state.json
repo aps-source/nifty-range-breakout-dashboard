@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-10-24T20:44:11.922453+05:30",
+ "last_tick": "2026-10-26T08:45:47.037030+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -18,8 +18,8 @@
    "kind": "index",
    "lot": 65,
    "paper_start": "2026-10-05",
-   "engine_status": "token_invalid",
-   "last_error": "daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user generated access token is invalid or expired.'}",
+   "engine_status": "running",
+   "last_error": null,
    "bar": {
     "date": "2026-10-23",
     "complete": true,
@@ -27,7 +27,7 @@
     "high": 22787.25,
     "low": 22372.0,
     "close": 22600.0,
-    "volume": 352213895.0,
+    "volume": 364190826.0,
     "sma50": 23403.72
    },
    "ltp": 22600.0,
@@ -45,7 +45,7 @@
     "to": "2026-10-22"
    },
    "volume": {
-    "today": 352213895.0,
+    "today": 364190826.0,
     "range_avg": 331928319.1,
     "prior_avg": 318018636.65,
     "needed": 497892478.65000004
@@ -68,7 +68,7 @@
      false
     ],
     [
-     "Volume 352M \u2265 1.5\u00d7 range avg = 498M",
+     "Volume 364M \u2265 1.5\u00d7 range avg = 498M",
      false
     ]
    ],
@@ -90,7 +90,7 @@
      false
     ],
     [
-     "Volume 352M \u2265 1.5\u00d7 range avg = 498M",
+     "Volume 364M \u2265 1.5\u00d7 range avg = 498M",
      false
     ]
    ],
@@ -715,8 +715,8 @@
    "kind": "index",
    "lot": 20,
    "paper_start": "2026-10-08",
-   "engine_status": "token_invalid",
-   "last_error": "daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user generated access token is invalid or expired.'}",
+   "engine_status": "data_error",
+   "last_error": "daily fetch failed: {'error_code': 'DH-904', 'error_type': 'Rate_Limit', 'error_message': 'Too many requests on server from single user breaching rate limits. Try throttling API calls.'}",
    "bar": {
     "date": "2026-10-23",
     "complete": true,
@@ -1418,6 +1418,6 @@
    }
   }
  },
- "engine_status": "token_invalid",
- "last_error": "NIFTY: daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user; SENSEX: daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user"
+ "engine_status": "partial",
+ "last_error": "SENSEX: daily fetch failed: {'error_code': 'DH-904', 'error_type': 'Rate_Limit', 'error_message': 'Too many requests on server f"
 }
