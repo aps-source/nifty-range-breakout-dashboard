@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-10-28T15:30:18.758159+05:30",
+ "last_tick": "2026-10-28T15:36:33.916209+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -22,7 +22,7 @@
    "last_error": null,
    "bar": {
     "date": "2026-10-28",
-    "complete": false,
+    "complete": true,
     "open": 22678.0,
     "high": 22778.05,
     "low": 22497.7,
@@ -719,7 +719,7 @@
    "last_error": null,
    "bar": {
     "date": "2026-10-28",
-    "complete": false,
+    "complete": true,
     "open": 73253.44,
     "high": 73525.44,
     "low": 72603.57,
