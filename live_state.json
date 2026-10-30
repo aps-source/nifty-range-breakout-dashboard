@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-10-29T17:42:00.366276+05:30",
+ "last_tick": "2026-10-30T09:00:38.794263+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -27,7 +27,7 @@
     "high": 22961.95,
     "low": 22656.75,
     "close": 22936.75,
-    "volume": 328871325.0,
+    "volume": 344482095.0,
     "sma50": 23276.78
    },
    "ltp": 22936.75,
@@ -45,7 +45,7 @@
     "to": "2026-10-28"
    },
    "volume": {
-    "today": 328871325.0,
+    "today": 344482095.0,
     "range_avg": 346818425.7,
     "prior_avg": 322622353.5,
     "needed": 520227638.54999995
@@ -68,7 +68,7 @@
      false
     ],
     [
-     "Volume 329M \u2265 1.5\u00d7 range avg = 520M",
+     "Volume 344M \u2265 1.5\u00d7 range avg = 520M",
      false
     ]
    ],
@@ -90,7 +90,7 @@
      false
     ],
     [
-     "Volume 329M \u2265 1.5\u00d7 range avg = 520M",
+     "Volume 344M \u2265 1.5\u00d7 range avg = 520M",
      false
     ]
    ],
@@ -724,7 +724,7 @@
     "high": 74166.16,
     "low": 73181.9,
     "close": 74151.04,
-    "volume": 15685319.0,
+    "volume": 19969319.0,
     "sma50": 74620.61
    },
    "ltp": 74151.04,
@@ -742,7 +742,7 @@
     "to": "2026-10-28"
    },
    "volume": {
-    "today": 15685319.0,
+    "today": 19969319.0,
     "range_avg": 16781990.3,
     "prior_avg": 38540446.6,
     "needed": 25172985.450000003
@@ -765,7 +765,7 @@
      false
     ],
     [
-     "Volume 16M \u2265 1.5\u00d7 range avg = 25M",
+     "Volume 20M \u2265 1.5\u00d7 range avg = 25M",
      false
     ]
    ],
@@ -787,7 +787,7 @@
      false
     ],
     [
-     "Volume 16M \u2265 1.5\u00d7 range avg = 25M",
+     "Volume 20M \u2265 1.5\u00d7 range avg = 25M",
      false
     ]
    ],
