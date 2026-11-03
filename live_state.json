@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-11-03T13:59:24.106604+05:30",
+ "last_tick": "2026-11-03T14:05:50.797346+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -26,11 +26,11 @@
     "open": 23582.25,
     "high": 23746.25,
     "low": 23482.8,
-    "close": 23711.05,
-    "volume": 276156994.0,
-    "sma50": 23231.58
+    "close": 23702.5,
+    "volume": 282627782.0,
+    "sma50": 23231.41
    },
-   "ltp": 23711.05,
+   "ltp": 23702.5,
    "split_guard": false,
    "range": {
     "hi": 23440.8,
@@ -45,7 +45,7 @@
     "to": "2026-11-02"
    },
    "volume": {
-    "today": 276156994.0,
+    "today": 282627782.0,
     "range_avg": 342903283.9,
     "prior_avg": 334393362.3,
     "needed": 514354925.84999996
@@ -60,7 +60,7 @@
      false
     ],
     [
-     "Uptrend: close > SMA50 23,232 and SMA50 rising",
+     "Uptrend: close > SMA50 23,231 and SMA50 rising",
      false
     ],
     [
@@ -68,7 +68,7 @@
      true
     ],
     [
-     "Volume 276M \u2265 1.5\u00d7 range avg = 514M",
+     "Volume 283M \u2265 1.5\u00d7 range avg = 514M",
      false
     ]
    ],
@@ -82,7 +82,7 @@
      false
     ],
     [
-     "Downtrend: close < SMA50 23,232 and SMA50 falling",
+     "Downtrend: close < SMA50 23,231 and SMA50 falling",
      false
     ],
     [
@@ -90,7 +90,7 @@
      false
     ],
     [
-     "Volume 276M \u2265 1.5\u00d7 range avg = 514M",
+     "Volume 283M \u2265 1.5\u00d7 range avg = 514M",
      false
     ]
    ],
@@ -460,7 +460,7 @@
     },
     {
      "date": "2026-11-03",
-     "close": 23711.05,
+     "close": 23702.5,
      "hi": 23440.8,
      "lo": 22372.0
     }
@@ -723,11 +723,11 @@
     "open": 76288.65,
     "high": 76779.66,
     "low": 76033.74,
-    "close": 76647.68,
-    "volume": 9507048.0,
-    "sma50": 74522.95
+    "close": 76627.62,
+    "volume": 9801781.0,
+    "sma50": 74522.55
    },
-   "ltp": 76647.68,
+   "ltp": 76627.62,
    "split_guard": false,
    "range": {
     "hi": 75692.78,
@@ -742,7 +742,7 @@
     "to": "2026-11-02"
    },
    "volume": {
-    "today": 9507048.0,
+    "today": 9801781.0,
     "range_avg": 15573060.9,
     "prior_avg": 39472640.75,
     "needed": 23359591.35
@@ -765,7 +765,7 @@
      true
     ],
     [
-     "Volume 9.51M \u2265 1.5\u00d7 range avg = 23M",
+     "Volume 9.80M \u2265 1.5\u00d7 range avg = 23M",
      false
     ]
    ],
@@ -787,7 +787,7 @@
      false
     ],
     [
-     "Volume 9.51M \u2265 1.5\u00d7 range avg = 23M",
+     "Volume 9.80M \u2265 1.5\u00d7 range avg = 23M",
      false
     ]
    ],
@@ -1157,7 +1157,7 @@
     },
     {
      "date": "2026-11-03",
-     "close": 76647.68,
+     "close": 76627.62,
      "hi": 75692.78,
      "lo": 72452.37
     }
