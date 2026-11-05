@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-11-05T15:26:26.610370+05:30",
+ "last_tick": "2026-11-05T15:32:49.813235+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -22,15 +22,15 @@
    "last_error": null,
    "bar": {
     "date": "2026-11-05",
-    "complete": false,
+    "complete": true,
     "open": 24378.05,
     "high": 24579.9,
     "low": 24296.3,
-    "close": 24542.2,
-    "volume": 510871286.0,
-    "sma50": 23234.21
+    "close": 24536.6,
+    "volume": 510874122.0,
+    "sma50": 23234.1
    },
-   "ltp": 24542.2,
+   "ltp": 24536.6,
    "split_guard": false,
    "range": {
     "hi": 23960.6,
@@ -45,7 +45,7 @@
     "to": "2026-11-04"
    },
    "volume": {
-    "today": 510871286.0,
+    "today": 510874122.0,
     "range_avg": 362512896.0,
     "prior_avg": 335479164.05,
     "needed": 543769344.0
@@ -460,7 +460,7 @@
     },
     {
      "date": "2026-11-05",
-     "close": 24542.2,
+     "close": 24536.6,
      "hi": 23960.6,
      "lo": 22372.0
     }
@@ -719,15 +719,15 @@
    "last_error": null,
    "bar": {
     "date": "2026-11-05",
-    "complete": false,
+    "complete": true,
     "open": 78910.94,
     "high": 79470.03,
     "low": 78520.56,
-    "close": 79373.18,
-    "volume": 28347603.0,
-    "sma50": 74563.65
+    "close": 79310.01,
+    "volume": 28434987.0,
+    "sma50": 74562.38
    },
-   "ltp": 79373.18,
+   "ltp": 79310.01,
    "split_guard": false,
    "range": {
     "hi": 77396.04,
@@ -742,7 +742,7 @@
     "to": "2026-11-04"
    },
    "volume": {
-    "today": 28347603.0,
+    "today": 28434987.0,
     "range_avg": 15394144.6,
     "prior_avg": 39319670.9,
     "needed": 23091216.9
@@ -757,7 +757,7 @@
      true
     ],
     [
-     "Uptrend: close > SMA50 74,564 and SMA50 rising",
+     "Uptrend: close > SMA50 74,562 and SMA50 rising",
      false
     ],
     [
@@ -779,7 +779,7 @@
      true
     ],
     [
-     "Downtrend: close < SMA50 74,564 and SMA50 falling",
+     "Downtrend: close < SMA50 74,562 and SMA50 falling",
      false
     ],
     [
@@ -1157,7 +1157,7 @@
     },
     {
      "date": "2026-11-05",
-     "close": 79373.18,
+     "close": 79310.01,
      "hi": 77396.04,
      "lo": 72452.37
     }
