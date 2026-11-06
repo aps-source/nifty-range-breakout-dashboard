@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-11-06T13:46:19.899596+05:30",
+ "last_tick": "2026-11-06T13:52:35.459886+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -24,10 +24,10 @@
     "date": "2026-11-06",
     "complete": false,
     "open": 24538.2,
-    "high": 24806.85,
+    "high": 24816.35,
     "low": 24388.05,
     "close": 24800.45,
-    "volume": 319037739.0,
+    "volume": 328024610.0,
     "sma50": 23243.42
    },
    "ltp": 24800.45,
@@ -45,7 +45,7 @@
     "to": "2026-11-05"
    },
    "volume": {
-    "today": 319037739.0,
+    "today": 328024610.0,
     "range_avg": 376815921.5,
     "prior_avg": 342851786.35,
     "needed": 565223882.25
@@ -68,7 +68,7 @@
      true
     ],
     [
-     "Volume 319M \u2265 1.5\u00d7 range avg = 565M",
+     "Volume 328M \u2265 1.5\u00d7 range avg = 565M",
      false
     ]
    ],
@@ -90,7 +90,7 @@
      false
     ],
     [
-     "Volume 319M \u2265 1.5\u00d7 range avg = 565M",
+     "Volume 328M \u2265 1.5\u00d7 range avg = 565M",
      false
     ]
    ],
@@ -718,68 +718,68 @@
    "engine_status": "running",
    "last_error": null,
    "bar": {
-    "date": "2026-11-05",
-    "complete": true,
-    "open": 78910.94,
-    "high": 79470.03,
-    "low": 78520.56,
-    "close": 79310.01,
-    "volume": 31612845.0,
-    "sma50": 74562.38
+    "date": "2026-11-06",
+    "complete": false,
+    "open": 79426.32,
+    "high": 80429.29,
+    "low": 79016.05,
+    "close": 80374.3,
+    "volume": 13384430.0,
+    "sma50": 74616.75
    },
-   "ltp": 79310.01,
+   "ltp": 80374.3,
    "split_guard": false,
    "range": {
-    "hi": 77396.04,
+    "hi": 79470.03,
     "lo": 72452.37,
-    "mid": 74924.2,
-    "height": 4943.67,
-    "atr": 963.54,
-    "width_atr": 5.13,
-    "target_long": 82339.71,
-    "target_short": 67508.7,
-    "from": "2026-10-22",
-    "to": "2026-11-04"
+    "mid": 75961.2,
+    "height": 7017.66,
+    "atr": 968.56,
+    "width_atr": 7.25,
+    "target_long": 86487.69,
+    "target_short": 65434.71,
+    "from": "2026-10-23",
+    "to": "2026-11-05"
    },
    "volume": {
-    "today": 31612845.0,
-    "range_avg": 15394144.6,
-    "prior_avg": 39319670.9,
-    "needed": 23091216.9
+    "today": 13384430.0,
+    "range_avg": 16110899.5,
+    "prior_avg": 39956793.85,
+    "needed": 24166349.25
    },
    "checks_long": [
     [
-     "Range tight: 4,944 pts = 5.13\u00d7 ATR (max 4\u00d7)",
+     "Range tight: 7,018 pts = 7.25\u00d7 ATR (max 4\u00d7)",
      false
     ],
     [
-     "Quiet range volume: avg 15M < prior 20-day 39M",
+     "Quiet range volume: avg 16M < prior 20-day 40M",
      true
     ],
     [
-     "Uptrend: close > SMA50 74,562 and SMA50 rising",
+     "Uptrend: close > SMA50 74,617 and SMA50 rising",
      false
     ],
     [
-     "Close above range high 77,396.04",
+     "Close above range high 79,470.03",
      true
     ],
     [
-     "Volume 32M \u2265 1.5\u00d7 range avg = 23M",
-     true
+     "Volume 13M \u2265 1.5\u00d7 range avg = 24M",
+     false
     ]
    ],
    "checks_short": [
     [
-     "Range tight: 4,944 pts = 5.13\u00d7 ATR (max 4\u00d7)",
+     "Range tight: 7,018 pts = 7.25\u00d7 ATR (max 4\u00d7)",
      false
     ],
     [
-     "Quiet range volume: avg 15M < prior 20-day 39M",
+     "Quiet range volume: avg 16M < prior 20-day 40M",
      true
     ],
     [
-     "Downtrend: close < SMA50 74,562 and SMA50 falling",
+     "Downtrend: close < SMA50 74,617 and SMA50 falling",
      false
     ],
     [
@@ -787,8 +787,8 @@
      false
     ],
     [
-     "Volume 32M \u2265 1.5\u00d7 range avg = 23M",
-     true
+     "Volume 13M \u2265 1.5\u00d7 range avg = 24M",
+     false
     ]
    ],
    "position": null,
@@ -801,12 +801,6 @@
     "rs": 0
    },
    "history": [
-    {
-     "date": "2026-08-11",
-     "close": 78154.25,
-     "hi": 79143.15,
-     "lo": 76672.77
-    },
     {
      "date": "2026-08-12",
      "close": 77966.35,
@@ -1159,6 +1153,12 @@
      "date": "2026-11-05",
      "close": 79310.01,
      "hi": 77396.04,
+     "lo": 72452.37
+    },
+    {
+     "date": "2026-11-06",
+     "close": 80374.3,
+     "hi": 79470.03,
      "lo": 72452.37
     }
    ],
