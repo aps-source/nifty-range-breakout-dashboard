@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-11-12T14:02:28.813830+05:30",
+ "last_tick": "2026-11-12T14:08:40.461700+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -26,11 +26,11 @@
     "open": 25213.5,
     "high": 25384.8,
     "low": 25142.95,
-    "close": 25251.5,
-    "volume": 255745755.0,
-    "sma50": 23327.68
+    "close": 25262.2,
+    "volume": 260118207.0,
+    "sma50": 23327.89
    },
-   "ltp": 25251.5,
+   "ltp": 25262.2,
    "split_guard": false,
    "range": {
     "hi": 25424.35,
@@ -45,7 +45,7 @@
     "to": "2026-11-11"
    },
    "volume": {
-    "today": 255745755.0,
+    "today": 260118207.0,
     "range_avg": 382141776.2,
     "prior_avg": 360694200.8,
     "needed": 573212664.3
@@ -68,7 +68,7 @@
      false
     ],
     [
-     "Volume 256M \u2265 1.5\u00d7 range avg = 573M",
+     "Volume 260M \u2265 1.5\u00d7 range avg = 573M",
      false
     ]
    ],
@@ -90,7 +90,7 @@
      false
     ],
     [
-     "Volume 256M \u2265 1.5\u00d7 range avg = 573M",
+     "Volume 260M \u2265 1.5\u00d7 range avg = 573M",
      false
     ]
    ],
@@ -460,7 +460,7 @@
     },
     {
      "date": "2026-11-12",
-     "close": 25251.5,
+     "close": 25262.2,
      "hi": 25424.35,
      "lo": 22656.75
     }
@@ -723,11 +723,11 @@
     "open": 81762.27,
     "high": 82325.61,
     "low": 81576.15,
-    "close": 81891.41,
-    "volume": 14099358.0,
-    "sma50": 74974.79
+    "close": 81929.32,
+    "volume": 14244241.0,
+    "sma50": 74975.55
    },
-   "ltp": 81891.41,
+   "ltp": 81929.32,
    "split_guard": false,
    "range": {
     "hi": 82520.4,
@@ -742,7 +742,7 @@
     "to": "2026-11-11"
    },
    "volume": {
-    "today": 14099358.0,
+    "today": 14244241.0,
     "range_avg": 16913132.2,
     "prior_avg": 38713034.65,
     "needed": 25369698.299999997
@@ -757,7 +757,7 @@
      true
     ],
     [
-     "Uptrend: close > SMA50 74,975 and SMA50 rising",
+     "Uptrend: close > SMA50 74,976 and SMA50 rising",
      true
     ],
     [
@@ -779,7 +779,7 @@
      true
     ],
     [
-     "Downtrend: close < SMA50 74,975 and SMA50 falling",
+     "Downtrend: close < SMA50 74,976 and SMA50 falling",
      false
     ],
     [
@@ -1157,7 +1157,7 @@
     },
     {
      "date": "2026-11-12",
-     "close": 81891.41,
+     "close": 81929.32,
      "hi": 82520.4,
      "lo": 73181.9
     }
