@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-11-15T19:11:03.997997+05:30",
+ "last_tick": "2026-11-15T19:21:10.999449+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -18,8 +18,8 @@
    "kind": "index",
    "lot": 65,
    "paper_start": "2026-10-05",
-   "engine_status": "running",
-   "last_error": null,
+   "engine_status": "token_invalid",
+   "last_error": "daily fetch failed: {'error_code': 'DH-906', 'error_type': 'Order_Error', 'error_message': 'Invalid Token'}",
    "bar": {
     "date": "2026-11-13",
     "complete": true,
@@ -715,8 +715,8 @@
    "kind": "index",
    "lot": 20,
    "paper_start": "2026-10-08",
-   "engine_status": "running",
-   "last_error": null,
+   "engine_status": "token_invalid",
+   "last_error": "daily fetch failed: {'error_code': 'DH-906', 'error_type': 'Order_Error', 'error_message': 'Invalid Token'}",
    "bar": {
     "date": "2026-11-13",
     "complete": true,
@@ -1418,6 +1418,6 @@
    }
   }
  },
- "engine_status": "running",
- "last_error": null
+ "engine_status": "token_invalid",
+ "last_error": "NIFTY: daily fetch failed: {'error_code': 'DH-906', 'error_type': 'Order_Error', 'error_message': 'Invalid Token'}; SENSEX: daily fetch failed: {'error_code': 'DH-906', 'error_type': 'Order_Error', 'error_message': 'Invalid Token'}"
 }
