@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-11-19T09:07:04.038204+05:30",
+ "last_tick": "2026-11-19T09:17:31.894320+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -18,49 +18,49 @@
    "kind": "index",
    "lot": 65,
    "paper_start": "2026-10-05",
-   "engine_status": "token_invalid",
-   "last_error": "daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user generated access token is invalid or expired.'}",
+   "engine_status": "running",
+   "last_error": null,
    "bar": {
-    "date": "2026-11-18",
-    "complete": true,
-    "open": 25323.15,
-    "high": 25390.8,
-    "low": 25141.8,
-    "close": 25227.95,
-    "volume": 282255434.0,
-    "sma50": 23434.82
+    "date": "2026-11-19",
+    "complete": false,
+    "open": 25186.8,
+    "high": 25222.65,
+    "low": 25151.5,
+    "close": 25216.3,
+    "volume": 13552038.0,
+    "sma50": 23463.56
    },
-   "ltp": 25227.95,
+   "ltp": 25216.3,
    "split_guard": false,
    "range": {
     "hi": 25501.35,
-    "lo": 23696.15,
-    "mid": 24598.75,
-    "height": 1805.2,
-    "atr": 322.96,
-    "width_atr": 5.59,
-    "target_long": 27306.55,
-    "target_short": 21890.95,
-    "from": "2026-11-04",
-    "to": "2026-11-17"
+    "lo": 24296.3,
+    "mid": 24898.82,
+    "height": 1205.05,
+    "atr": 325.16,
+    "width_atr": 3.71,
+    "target_long": 26706.4,
+    "target_short": 23091.25,
+    "from": "2026-11-05",
+    "to": "2026-11-18"
    },
    "volume": {
-    "today": 282255434.0,
-    "range_avg": 364079868.8,
-    "prior_avg": 342111395.35,
-    "needed": 546119803.2
+    "today": 13552038.0,
+    "range_avg": 354237258.1,
+    "prior_avg": 345592109.75,
+    "needed": 531355887.15000004
    },
    "checks_long": [
     [
-     "Range tight: 1,805 pts = 5.59\u00d7 ATR (max 4\u00d7)",
+     "Range tight: 1,205 pts = 3.71\u00d7 ATR (max 4\u00d7)",
+     true
+    ],
+    [
+     "Quiet range volume: avg 354M < prior 20-day 346M",
      false
     ],
     [
-     "Quiet range volume: avg 364M < prior 20-day 342M",
-     false
-    ],
-    [
-     "Uptrend: close > SMA50 23,435 and SMA50 rising",
+     "Uptrend: close > SMA50 23,464 and SMA50 rising",
      true
     ],
     [
@@ -68,29 +68,29 @@
      false
     ],
     [
-     "Volume 282M \u2265 1.5\u00d7 range avg = 546M",
+     "Volume 14M \u2265 1.5\u00d7 range avg = 531M",
      false
     ]
    ],
    "checks_short": [
     [
-     "Range tight: 1,805 pts = 5.59\u00d7 ATR (max 4\u00d7)",
+     "Range tight: 1,205 pts = 3.71\u00d7 ATR (max 4\u00d7)",
+     true
+    ],
+    [
+     "Quiet range volume: avg 354M < prior 20-day 346M",
      false
     ],
     [
-     "Quiet range volume: avg 364M < prior 20-day 342M",
+     "Downtrend: close < SMA50 23,464 and SMA50 falling",
      false
     ],
     [
-     "Downtrend: close < SMA50 23,435 and SMA50 falling",
+     "Close below range low 24,296.30",
      false
     ],
     [
-     "Close below range low 23,696.15",
-     false
-    ],
-    [
-     "Volume 282M \u2265 1.5\u00d7 range avg = 546M",
+     "Volume 14M \u2265 1.5\u00d7 range avg = 531M",
      false
     ]
    ],
@@ -104,12 +104,6 @@
     "rs": 0
    },
    "history": [
-    {
-     "date": "2026-08-24",
-     "close": 24219.05,
-     "hi": 24620.95,
-     "lo": 24025.65
-    },
     {
      "date": "2026-08-25",
      "close": 24334.55,
@@ -463,6 +457,12 @@
      "close": 25227.95,
      "hi": 25501.35,
      "lo": 23696.15
+    },
+    {
+     "date": "2026-11-19",
+     "close": 25216.3,
+     "hi": 25501.35,
+     "lo": 24296.3
     }
    ],
    "backtest": {
@@ -715,41 +715,41 @@
    "kind": "index",
    "lot": 20,
    "paper_start": "2026-10-08",
-   "engine_status": "token_invalid",
-   "last_error": "daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user generated access token is invalid or expired.'}",
+   "engine_status": "running",
+   "last_error": null,
    "bar": {
-    "date": "2026-11-18",
-    "complete": true,
-    "open": 82376.56,
-    "high": 82578.87,
-    "low": 81780.47,
-    "close": 82031.81,
-    "volume": 16999584.0,
-    "sma50": 75416.75
+    "date": "2026-11-19",
+    "complete": false,
+    "open": 82074.16,
+    "high": 82088.94,
+    "low": 81878.64,
+    "close": 82079.95,
+    "volume": 421520.0,
+    "sma50": 75535.69
    },
-   "ltp": 82031.81,
+   "ltp": 82079.95,
    "split_guard": false,
    "range": {
     "hi": 82897.49,
-    "lo": 76604.85,
-    "mid": 79751.17,
-    "height": 6292.64,
-    "atr": 1030.27,
-    "width_atr": 6.11,
-    "target_long": 89190.13,
-    "target_short": 70312.21,
-    "from": "2026-11-04",
-    "to": "2026-11-17"
+    "lo": 78520.56,
+    "mid": 80709.02,
+    "height": 4376.93,
+    "atr": 1035.56,
+    "width_atr": 4.23,
+    "target_long": 87274.42,
+    "target_short": 74143.63,
+    "from": "2026-11-05",
+    "to": "2026-11-18"
    },
    "volume": {
-    "today": 16999584.0,
-    "range_avg": 17230763.0,
-    "prior_avg": 36045086.0,
-    "needed": 25846144.5
+    "today": 421520.0,
+    "range_avg": 17224813.4,
+    "prior_avg": 35716825.15,
+    "needed": 25837220.099999998
    },
    "checks_long": [
     [
-     "Range tight: 6,293 pts = 6.11\u00d7 ATR (max 4\u00d7)",
+     "Range tight: 4,377 pts = 4.23\u00d7 ATR (max 4\u00d7)",
      false
     ],
     [
@@ -757,7 +757,7 @@
      true
     ],
     [
-     "Uptrend: close > SMA50 75,417 and SMA50 rising",
+     "Uptrend: close > SMA50 75,536 and SMA50 rising",
      true
     ],
     [
@@ -765,13 +765,13 @@
      false
     ],
     [
-     "Volume 17M \u2265 1.5\u00d7 range avg = 26M",
+     "Volume 0.42M \u2265 1.5\u00d7 range avg = 26M",
      false
     ]
    ],
    "checks_short": [
     [
-     "Range tight: 6,293 pts = 6.11\u00d7 ATR (max 4\u00d7)",
+     "Range tight: 4,377 pts = 4.23\u00d7 ATR (max 4\u00d7)",
      false
     ],
     [
@@ -779,15 +779,15 @@
      true
     ],
     [
-     "Downtrend: close < SMA50 75,417 and SMA50 falling",
+     "Downtrend: close < SMA50 75,536 and SMA50 falling",
      false
     ],
     [
-     "Close below range low 76,604.85",
+     "Close below range low 78,520.56",
      false
     ],
     [
-     "Volume 17M \u2265 1.5\u00d7 range avg = 26M",
+     "Volume 0.42M \u2265 1.5\u00d7 range avg = 26M",
      false
     ]
    ],
@@ -801,12 +801,6 @@
     "rs": 0
    },
    "history": [
-    {
-     "date": "2026-08-24",
-     "close": 77369.11,
-     "hi": 78676.98,
-     "lo": 76822.89
-    },
     {
      "date": "2026-08-25",
      "close": 77656.09,
@@ -1160,6 +1154,12 @@
      "close": 82031.81,
      "hi": 82897.49,
      "lo": 76604.85
+    },
+    {
+     "date": "2026-11-19",
+     "close": 82079.95,
+     "hi": 82897.49,
+     "lo": 78520.56
     }
    ],
    "backtest": {
@@ -1418,6 +1418,6 @@
    }
   }
  },
- "engine_status": "token_invalid",
- "last_error": "NIFTY: daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user; SENSEX: daily fetch failed: {'error_code': 'DH-901', 'error_type': 'Invalid_Authentication', 'error_message': 'Client ID or user"
+ "engine_status": "running",
+ "last_error": null
 }
