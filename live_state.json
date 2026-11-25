@@ -1,5 +1,5 @@
 {
- "last_tick": "2026-11-25T09:04:21.789553+05:30",
+ "last_tick": "2026-11-25T09:16:42.954236+05:30",
  "rules": {
   "N": 10,
   "W": 4,
@@ -18,71 +18,71 @@
    "kind": "index",
    "lot": 65,
    "paper_start": "2026-10-05",
-   "engine_status": "data_error",
-   "last_error": "daily fetch failed: HTTPSConnectionPool(host='api.dhan.co', port=443): Max retries exceeded with url: /v2/charts/historical (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1077)')))",
+   "engine_status": "running",
+   "last_error": null,
    "bar": {
-    "date": "2026-11-23",
-    "complete": true,
-    "open": 25929.15,
-    "high": 25992.6,
-    "low": 25343.85,
-    "close": 25366.4,
-    "volume": 488802437.0,
-    "sma50": 23551.53
+    "date": "2026-11-25",
+    "complete": false,
+    "open": 25658.35,
+    "high": 25756.0,
+    "low": 25619.0,
+    "close": 25719.15,
+    "volume": 16705276.0,
+    "sma50": 23596.02
    },
-   "ltp": 25366.4,
+   "ltp": 25719.15,
    "split_guard": false,
    "range": {
-    "hi": 25808.8,
+    "hi": 25992.6,
     "lo": 24838.75,
-    "mid": 25323.78,
-    "height": 970.05,
-    "atr": 355.6,
-    "width_atr": 2.73,
-    "target_long": 26778.85,
-    "target_short": 23868.7,
-    "from": "2026-11-08",
-    "to": "2026-11-20"
+    "mid": 25415.67,
+    "height": 1153.85,
+    "atr": 345.48,
+    "width_atr": 3.34,
+    "target_long": 27146.45,
+    "target_short": 23684.9,
+    "from": "2026-11-09",
+    "to": "2026-11-23"
    },
    "volume": {
-    "today": 488802437.0,
-    "range_avg": 327396235.7,
-    "prior_avg": 361043960.4,
-    "needed": 491094353.54999995
+    "today": 16705276.0,
+    "range_avg": 372470617.7,
+    "prior_avg": 349651697.75,
+    "needed": 558705926.55
    },
    "checks_long": [
     [
-     "Range tight: 970 pts = 2.73\u00d7 ATR (max 4\u00d7)",
+     "Range tight: 1,154 pts = 3.34\u00d7 ATR (max 4\u00d7)",
      true
     ],
     [
-     "Quiet range volume: avg 327M < prior 20-day 361M",
-     true
-    ],
-    [
-     "Uptrend: close > SMA50 23,552 and SMA50 rising",
-     true
-    ],
-    [
-     "Close above range high 25,808.80",
+     "Quiet range volume: avg 372M < prior 20-day 350M",
      false
     ],
     [
-     "Volume 489M \u2265 1.5\u00d7 range avg = 491M",
+     "Uptrend: close > SMA50 23,596 and SMA50 rising",
+     true
+    ],
+    [
+     "Close above range high 25,992.60",
+     false
+    ],
+    [
+     "Volume 17M \u2265 1.5\u00d7 range avg = 559M",
      false
     ]
    ],
    "checks_short": [
     [
-     "Range tight: 970 pts = 2.73\u00d7 ATR (max 4\u00d7)",
+     "Range tight: 1,154 pts = 3.34\u00d7 ATR (max 4\u00d7)",
      true
     ],
     [
-     "Quiet range volume: avg 327M < prior 20-day 361M",
-     true
+     "Quiet range volume: avg 372M < prior 20-day 350M",
+     false
     ],
     [
-     "Downtrend: close < SMA50 23,552 and SMA50 falling",
+     "Downtrend: close < SMA50 23,596 and SMA50 falling",
      false
     ],
     [
@@ -90,7 +90,7 @@
      false
     ],
     [
-     "Volume 489M \u2265 1.5\u00d7 range avg = 491M",
+     "Volume 17M \u2265 1.5\u00d7 range avg = 559M",
      false
     ]
    ],
@@ -104,12 +104,6 @@
     "rs": 0
    },
    "history": [
-    {
-     "date": "2026-08-27",
-     "close": 24090.85,
-     "hi": 24431.6,
-     "lo": 24025.65
-    },
     {
      "date": "2026-08-28",
      "close": 24175.65,
@@ -460,8 +454,14 @@
     },
     {
      "date": "2026-11-23",
-     "close": 25366.4,
+     "close": 25349.65,
      "hi": 25808.8,
+     "lo": 24838.75
+    },
+    {
+     "date": "2026-11-25",
+     "close": 25719.15,
+     "hi": 25992.6,
      "lo": 24838.75
     }
    ],
@@ -718,68 +718,68 @@
    "engine_status": "running",
    "last_error": null,
    "bar": {
-    "date": "2026-11-23",
-    "complete": true,
-    "open": 84421.97,
-    "high": 84662.96,
-    "low": 82395.88,
-    "close": 82435.99,
-    "volume": 17422577.0,
-    "sma50": 75874.81
+    "date": "2026-11-25",
+    "complete": false,
+    "open": 83465.87,
+    "high": 83869.6,
+    "low": 83380.75,
+    "close": 83750.09,
+    "volume": 1362523.0,
+    "sma50": 76051.76
    },
-   "ltp": 82435.99,
+   "ltp": 83750.09,
    "split_guard": false,
    "range": {
-    "hi": 84037.96,
+    "hi": 84662.96,
     "lo": 80519.31,
-    "mid": 82278.64,
-    "height": 3518.65,
-    "atr": 1146.33,
-    "width_atr": 3.07,
-    "target_long": 87556.61,
-    "target_short": 77000.66,
-    "from": "2026-11-08",
-    "to": "2026-11-20"
+    "mid": 82591.14,
+    "height": 4143.65,
+    "atr": 1118.01,
+    "width_atr": 3.71,
+    "target_long": 88806.61,
+    "target_short": 76375.66,
+    "from": "2026-11-09",
+    "to": "2026-11-23"
    },
    "volume": {
-    "today": 17422577.0,
-    "range_avg": 15655990.6,
-    "prior_avg": 17393783.6,
-    "needed": 23483985.9
+    "today": 1362523.0,
+    "range_avg": 17007526.9,
+    "prior_avg": 16663139.8,
+    "needed": 25511290.349999998
    },
    "checks_long": [
     [
-     "Range tight: 3,519 pts = 3.07\u00d7 ATR (max 4\u00d7)",
+     "Range tight: 4,144 pts = 3.71\u00d7 ATR (max 4\u00d7)",
      true
     ],
     [
-     "Quiet range volume: avg 16M < prior 20-day 17M",
-     true
-    ],
-    [
-     "Uptrend: close > SMA50 75,875 and SMA50 rising",
-     true
-    ],
-    [
-     "Close above range high 84,037.96",
+     "Quiet range volume: avg 17M < prior 20-day 17M",
      false
     ],
     [
-     "Volume 17M \u2265 1.5\u00d7 range avg = 23M",
+     "Uptrend: close > SMA50 76,052 and SMA50 rising",
+     true
+    ],
+    [
+     "Close above range high 84,662.96",
+     false
+    ],
+    [
+     "Volume 1.36M \u2265 1.5\u00d7 range avg = 26M",
      false
     ]
    ],
    "checks_short": [
     [
-     "Range tight: 3,519 pts = 3.07\u00d7 ATR (max 4\u00d7)",
+     "Range tight: 4,144 pts = 3.71\u00d7 ATR (max 4\u00d7)",
      true
     ],
     [
-     "Quiet range volume: avg 16M < prior 20-day 17M",
-     true
+     "Quiet range volume: avg 17M < prior 20-day 17M",
+     false
     ],
     [
-     "Downtrend: close < SMA50 75,875 and SMA50 falling",
+     "Downtrend: close < SMA50 76,052 and SMA50 falling",
      false
     ],
     [
@@ -787,7 +787,7 @@
      false
     ],
     [
-     "Volume 17M \u2265 1.5\u00d7 range avg = 23M",
+     "Volume 1.36M \u2265 1.5\u00d7 range avg = 26M",
      false
     ]
    ],
@@ -801,12 +801,6 @@
     "rs": 0
    },
    "history": [
-    {
-     "date": "2026-08-27",
-     "close": 76933.59,
-     "hi": 78119.39,
-     "lo": 76822.89
-    },
     {
      "date": "2026-08-28",
      "close": 77264.51,
@@ -1160,6 +1154,12 @@
      "close": 82435.99,
      "hi": 84037.96,
      "lo": 80519.31
+    },
+    {
+     "date": "2026-11-25",
+     "close": 83750.09,
+     "hi": 84662.96,
+     "lo": 80519.31
     }
    ],
    "backtest": {
@@ -1418,6 +1418,6 @@
    }
   }
  },
- "engine_status": "partial",
- "last_error": "NIFTY: daily fetch failed: HTTPSConnectionPool(host='api.dhan.co', port=443): Max retries exceeded with url: /v2/charts/histori"
+ "engine_status": "running",
+ "last_error": null
 }
